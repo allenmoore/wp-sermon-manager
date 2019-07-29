@@ -1,16 +1,32 @@
 <?php
+/**
+ * Books
+ *
+ * @package WPSermonManager\Taxonomies
+ */
+namespace WPSermonManager\Taxonomies;
 
-namespace WPSermonManager;
-
-class BooksTaxonomy {
+/**
+ * The Books Class.
+ *
+ * Hanles registering the Books taxonomy.
+ *
+ * @since 1.0.0
+ */
+class Books {
 
 	/**
-	 * The BooksTaxonomy Constructor.
+	 * The Books Constructor.
 	 */
 	public function __construct() {
 		add_action( 'init', array( $this, 'register_taxonomy' ), 0 );
 	}
 
+	/**
+	 * Method to get the Books taxonomy labels.
+	 *
+	 * @return array An array of taxonomy labels.
+	 */
 	public function get_labels() {
 
 		$labels = array(
@@ -39,6 +55,11 @@ class BooksTaxonomy {
 		return $labels;
 	}
 
+	/**
+	 * Method to get the Books taxonomy rewrites.
+	 *
+	 * @return array An array of taxonomy rewrites.
+	 */
 	public function get_rewrites() {
 
 		$rewrite = array(
@@ -50,6 +71,11 @@ class BooksTaxonomy {
 		return $rewrite;
 	}
 
+	/**
+	 * Method to get the Books taxonomy arguments.
+	 *
+	 * @return array An array of taxonomy arguments.
+	 */
 	public function get_args() {
 
 		$labels = $this->get_labels();
@@ -70,6 +96,9 @@ class BooksTaxonomy {
 		return $args;
 	}
 
+	/**
+	 * Method to register the Books taxonomy.
+	 */
 	public function register_taxonomy() {
 
 		$args = $this->get_args();

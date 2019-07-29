@@ -1,16 +1,32 @@
 <?php
+/**
+ * Series
+ *
+ * @package WPSermonManager\Taxonomies
+ */
+namespace WPSermonManager\Taxonomies;
 
-namespace WPSermonManager;
-
-class SeriesTaxonomy {
+/**
+ * The Series Class.
+ *
+ * Hanles registering the Series taxonomy.
+ *
+ * @since 1.0.0
+ */
+class Series {
 
 	/**
-	 * The SeriesTaxonomy Constructor.
+	 * The Series Constructor.
 	 */
 	public function __construct() {
 		add_action( 'init', array( $this, 'register_taxonomy' ), 0 );
 	}
 
+	/**
+	 * Method to get the Series taxonomy labels.
+	 *
+	 * @return array An array of taxonomy labels.
+	 */
 	public function get_labels() {
 
 		$labels = array(
@@ -39,6 +55,11 @@ class SeriesTaxonomy {
 		return $labels;
 	}
 
+	/**
+	 * Method to get the Series taxonomy rewrites.
+	 *
+	 * @return array An array of taxonomy rewrites.
+	 */
 	public function get_rewrites() {
 
 		$rewrite = array(
@@ -50,6 +71,11 @@ class SeriesTaxonomy {
 		return $rewrite;
 	}
 
+	/**
+	 * Method to get the Series taxonomy arguments.
+	 *
+	 * @return array An array of taxonomy arguments.
+	 */
 	public function get_args() {
 
 		$labels = $this->get_labels();
@@ -70,6 +96,9 @@ class SeriesTaxonomy {
 		return $args;
 	}
 
+	/**
+	 * Method to register the Series taxonomy.
+	 */
 	public function register_taxonomy() {
 
 		$args = $this->get_args();

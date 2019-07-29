@@ -2,12 +2,12 @@
 /**
  * Settings
  *
- * @package WPSM/Settings
+ * @package WPSermonManager\Admin
  */
-namespace WPSermonManager;
+namespace WPSermonManager\Admin;
 
 /**
- * The Settings class.
+ * The Settings Class.
  *
  * Handles displaying the settings page and saving data.
  *
@@ -19,10 +19,12 @@ class Settings {
 	 * The Settings constructor.
 	 */
 	public function __construct() {
-		//add_action( 'admin_init', array( $this, 'init_settings' ) );
 		add_action( 'admin_menu', array( $this, 'settings_menu' ), 60 );
 	}
 
+	/**
+	 * Method to add a Settings page as a submenu of the Sermons post type.
+	 */
 	public function settings_menu() {
 
 		add_submenu_page(
@@ -36,41 +38,12 @@ class Settings {
 	}
 
 	/**
-	 * Init the settings page.
+	 * Method to render the Sermon Settings page.
 	 */
 	public function settings_page() {
 		?>
 		<div class="test"></div>
 		<?php
-	}
-
-	public function output() {
-		?>
-		<div class="test"></div>
-		<?php
-	}
-
-	/**
-	 * Method that adds Setting Sections and Fields to the WordPress Media Settings screen.
-	 */
-	public function init_settings() {
-
-		add_settings_section(
-			'wpsm_path_section',
-			'WP Sermon Manager',
-			array( $this, 'setting_section_callback' ),
-			'media'
-		);
-
-		add_settings_field(
-			'wpsm_path',
-			'Path to svg files',
-			array( $this, 'setting_callback' ),
-			'media',
-			'wpsm_path_section'
-		);
-
-		register_setting( 'media', 'wpsm_path', 'sanitize_text_field' );
 	}
 
 	/**

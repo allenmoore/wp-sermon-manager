@@ -44,15 +44,14 @@ define( 'WP_SERMON_MANAGER_PATH',    dirname( __FILE__ ) . '/' );
 define( 'WP_SERMON_MANAGER_INC',     WP_SERMON_MANAGER_PATH . 'includes/' );
 
 require_once( WP_SERMON_MANAGER_INC . 'Plugin.php' );
-require_once( WP_SERMON_MANAGER_INC . 'Helpers.php' );
-require_once( WP_SERMON_MANAGER_INC . 'SermonsCPT.php' );
-require_once( WP_SERMON_MANAGER_INC . 'UserRoles.php' );
-require_once( WP_SERMON_MANAGER_INC . 'Settings.php' );
-require_once( WP_SERMON_MANAGER_INC . 'SpeakersTaxonomy.php' );
-require_once( WP_SERMON_MANAGER_INC . 'SeriesTaxonomy.php' );
-require_once( WP_SERMON_MANAGER_INC . 'TopicsTaxonomy.php' );
-require_once( WP_SERMON_MANAGER_INC . 'BooksTaxonomy.php' );
-require_once( WP_SERMON_MANAGER_INC . 'ServiceTypeTaxonomy.php' );
+require_once( WP_SERMON_MANAGER_INC . 'Admin/UserRoles.php' );
+require_once( WP_SERMON_MANAGER_INC . 'Admin/Settings.php' );
+require_once( WP_SERMON_MANAGER_INC . 'Filters/Fields/SermonTitle.php' );
+require_once( WP_SERMON_MANAGER_INC . 'PostTypes/Sermons.php' );
+require_once( WP_SERMON_MANAGER_INC . 'Taxonomies/Books.php' );
+require_once( WP_SERMON_MANAGER_INC . 'Taxonomies/Series.php' );
+require_once( WP_SERMON_MANAGER_INC . 'Taxonomies/Speakers.php' );
+require_once( WP_SERMON_MANAGER_INC . 'Taxonomies/Topics.php' );
 require_once( WP_SERMON_MANAGER_INC . 'TemplateTags.php' );
 
 /**

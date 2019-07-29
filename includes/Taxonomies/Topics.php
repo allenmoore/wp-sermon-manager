@@ -1,16 +1,32 @@
 <?php
+/**
+ * Topics
+ *
+ * @package WPSermonManager\Taxonomies
+ */
+namespace WPSermonManager\Taxonomies;
 
-namespace WPSermonManager;
-
-class TopicsTaxonomy {
+/**
+ * The Topics Class.
+ *
+ * Hanles registering the Topics taxonomy.
+ *
+ * @since 1.0.0
+ */
+class Topics {
 
 	/**
-	 * The TopicsTaxonomy Constructor.
+	 * The Topics Constructor.
 	 */
 	public function __construct() {
 		add_action( 'init', array( $this, 'register_taxonomy' ), 0 );
 	}
 
+	/**
+	 * Method to get the Topics taxonomy labels.
+	 *
+	 * @return array An array of taxonomy labels.
+	 */
 	public function get_labels() {
 
 		$labels = array(
@@ -39,6 +55,11 @@ class TopicsTaxonomy {
 		return $labels;
 	}
 
+	/**
+	 * Method to get the Topics taxonomy rewrites.
+	 *
+	 * @return array An array of taxonomy rewrites.
+	 */
 	public function get_rewrites() {
 
 		$rewrite = array(
@@ -50,6 +71,11 @@ class TopicsTaxonomy {
 		return $rewrite;
 	}
 
+	/**
+	 * Method to get the Topics taxonomy arguments.
+	 *
+	 * @return array An array of taxonomy arguments.
+	 */
 	public function get_args() {
 
 		$labels = $this->get_labels();
@@ -70,6 +96,9 @@ class TopicsTaxonomy {
 		return $args;
 	}
 
+	/**
+	 * Method to register the Topics taxonomy.
+	 */
 	public function register_taxonomy() {
 
 		$args = $this->get_args();

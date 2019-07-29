@@ -1,11 +1,22 @@
 <?php
+/**
+ * Sermons
+ *
+ * @package WPSermonManager\PostTypes
+ */
+namespace WPSermonManager\PostTypes;
 
-namespace WPSermonManager;
-
-class SermonsCPT {
+/**
+ * The Sermons Class.
+ *
+ * Handles registering the Sermon post type.
+ *
+ * @since 1.0.0
+ */
+class Sermons {
 
 	/**
-	 * The SermonsCPT Constructor.
+	 * The Sermons Constructor.
 	 */
 	public function __construct() {
 		add_action( 'init', array( $this, 'register_post_type' ), 0 );
@@ -37,7 +48,7 @@ class SermonsCPT {
 			'search_items'          => __( 'Search Sermon', 'wp_sermon_manager' ),
 			'not_found'             => __( 'Not found', 'wp_sermon_manager' ),
 			'not_found_in_trash'    => __( 'Not found in Trash', 'wp_sermon_manager' ),
-			'featured_image'        => __( 'Sermon Image', 'wp_sermon_manager' ),
+			'featured_image'        => __( 'Featured Image', 'wp_sermon_manager' ),
 			'set_featured_image'    => __( 'Set featured image', 'wp_sermon_manager' ),
 			'remove_featured_image' => __( 'Remove featured image', 'wp_sermon_manager' ),
 			'use_featured_image'    => __( 'Use as featured image', 'wp_sermon_manager' ),
@@ -82,13 +93,12 @@ class SermonsCPT {
 			'description'           => __( 'Sermon Post Type from WP Sermon Manager', 'wp_sermon_manager' ),
 			'labels'                => $labels,
 			'supports'              => array( 'title', 'editor', 'thumbnail', 'trackbacks', 'revisions', 'custom-fields', 'page-attributes' ),
-			'taxonomies'            => array(),
 			'hierarchical'          => false,
 			'public'                => true,
 			'show_ui'               => true,
 			'show_in_menu'          => true,
 			'menu_position'         => 25,
-			'menu_icon'             => esc_url( plugin_dir_url( dirname( __FILE__ ) ) . 'dist/images/wpsm-menu-icon.png' ),
+			'menu_icon'             => 'dashicons-book-alt',
 			'show_in_admin_bar'     => true,
 			'show_in_nav_menus'     => true,
 			'can_export'            => true,
@@ -96,9 +106,9 @@ class SermonsCPT {
 			'exclude_from_search'   => false,
 			'publicly_queryable'    => true,
 			'rewrite'               => $rewrite,
-			'capability_type'       => 'page',
+			'capability_type'       => 'post',
 			'show_in_rest'          => true,
-			'rest_controller_class' => 'WP_REST_Sermons_Controller',
+			//'rest_controller_class' => 'WP_REST_Sermons_Controller',
 		);
 
 		return $args;

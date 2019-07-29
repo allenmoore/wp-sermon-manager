@@ -6,15 +6,14 @@
  */
 namespace WPSermonManager;
 
-use WPSermonManager\Helpers;
-use WPSermonManager\SermonsCPT;
-use WPSermonManager\UserRoles;
-use WPSermonManager\Settings;
-use WPSermonManager\SpeakersTaxonomy;
-use WPSermonManager\SeriesTaxonomy;
-use WPSermonManager\TopicsTaxonomy;
-use WPSermonManager\BooksTaxonomy;
-use WPSermonManager\ServiceTypeTaxonomy;
+use WPSermonManager\Admin\UserRoles;
+use WPSermonManager\Admin\Settings;
+use WPSermonManager\Filters\Fields\SermonTitle;
+use WPSermonManager\PostTypes\Sermons;
+use WPSermonManager\Taxonomies\Books;
+use WPSermonManager\Taxonomies\Series;
+use WPSermonManager\Taxonomies\Speakers;
+use WPSermonManager\Taxonomies\Topics;
 
 /**
  * The Plugin Class.
@@ -26,26 +25,10 @@ use WPSermonManager\ServiceTypeTaxonomy;
 class Plugin {
 
 	/**
-	 * Property representing an instance of the Helpers class.
-	 *
-	 * @access public
-	 * @var \WPSermonManager\Helpers
-	 */
-	public $helpers;
-
-	/**
-	 * Property representing an instance of the SermonsCPT class.
-	 *
-	 * @access public
-	 * @var \WPSermonManager\SermonsCPT
-	 */
-	public $sermons_cpt;
-
-	/**
 	 * Property representing an instance of the UserRoles class.
 	 *
 	 * @access public
-	 * @var \WPSermonManager\UserRoles
+	 * @var \WPSermonManager\Admin\UserRoles
 	 */
 	public $user_roles;
 
@@ -53,63 +36,70 @@ class Plugin {
 	 * Property representing an instance of the Settings class.
 	 *
 	 * @access public
-	 * @var \WPSermonManager\Settings
+	 * @var \WPSermonManager\Admin\Settings
 	 */
 	public $settings;
 
 	/**
-	 * Property representing an instance of the SpeakersTaxonomy class.
+	 * Property representing an instance of the SermonTitle class.
 	 *
 	 * @access public
-	 * @var \WPSermonManager\SpeakersTaxonomy
+	 * @var \WPSermonManager\Filters\Fields\SermonTitle
 	 */
-	public $speakers_tax;
+	public $sermon_title_filter;
 
 	/**
-	 * Property representing an instance of the SeriesTaxonomy class.
+	 * Property representing an instance of the Sermons class.
 	 *
 	 * @access public
-	 * @var \WPSermonManager\SeriesTaxonomy
+	 * @var \WPSermonManager\PostTypes\Sermons
 	 */
-	public $series_tax;
+	public $sermons_cpt;
 
 	/**
-	 * Property representing an instance of the TopicsTaxonomy class.
+	 * Property representing an instance of the Books class.
 	 *
 	 * @access public
-	 * @var \WPSermonManager\TopicsTaxonomy
-	 */
-	public $topics_tax;
-
-	/**
-	 * Property representing an instance of the BooksTaxonomy class.
-	 *
-	 * @access public
-	 * @var \WPSermonManager\BooksTaxonomy
+	 * @var \WPSermonManager\Taxonomies\Books
 	 */
 	public $books_tax;
 
 	/**
-	 * Property representing an instance of the ServiceTypeTaxonomy class.
+	 * Property representing an instance of the Series class.
 	 *
 	 * @access public
-	 * @var \WPSermonManager\ServiceTypeTaxonomy
+	 * @var \WPSermonManager\Taxonomies\Series
 	 */
-	public $service_type_tax;
+	public $series_tax;
+
+	/**
+	 * Property representing an instance of the Speakers class.
+	 *
+	 * @access public
+	 * @var \WPSermonManager\Taxonomies\Speakers
+	 */
+	public $speakers_tax;
+
+	/**
+	 * Property representing an instance of the Topics class.
+	 *
+	 * @access public
+	 * @var \WPSermonManager\Taxonomies\Topics
+	 */
+	public $topics_tax;
 
 	/**
 	 * The Plugin constructor.
 	 */
 	public function __construct() {
-		$this->helpers = new Helpers();
-		$this->sermons_cpt = new SermonsCPT();
 		$this->user_roles = new UserRoles();
 		$this->settings = new Settings();
-		$this->speakers_tax = new SpeakersTaxonomy();
-		$this->series_tax = new SeriesTaxonomy();
-		$this->topics_tax = new TopicsTaxonomy();
-		$this->books_tax = new BooksTaxonomy();
-		$this->service_type_tax = new ServiceTypeTaxonomy();
+		$this->sermon_title_filter = new SermonTitle();
+		$this->sermons_cpt = new Sermons();
+		$this->speakers_tax = new Speakers();
+		$this->series_tax = new Series();
+		$this->topics_tax = new Topics();
+		$this->books_tax = new Books();
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'enquque_admin_styles' ) );
 		add_action( 'init', array( $this, 'i18n' ) );
