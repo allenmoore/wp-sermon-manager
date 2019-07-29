@@ -22,7 +22,7 @@ gulp.task('postcss', () => {
   const opts = {
     dest: './dist/css',
     src: [
-      './src/css/style.css'
+      './src/css/admin.css'
     ]
   };
   log(chalk.redBright('--- Running PostCSS Goodness ---'));

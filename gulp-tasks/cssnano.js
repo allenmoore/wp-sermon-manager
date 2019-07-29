@@ -18,7 +18,7 @@ const log = console.log;
 gulp.task('cssnano', () => {
   log(chalk.magenta('--- Minifying CSS with CSSNano ---'));
 
-  return gulp.src(['./dist/css/style.css'])
+  return gulp.src(['./dist/css/admin.css'])
     .pipe(sourcemaps.init({loadMaps: true}))
     .pipe(cssnano({
       autoprefixer: false,

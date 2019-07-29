@@ -11,6 +11,11 @@ class SermonsCPT {
 		add_action( 'init', array( $this, 'register_post_type' ), 0 );
 	}
 
+	/**
+	 * Method to get the Sermon post type labels.
+	 *
+	 * @return array An array of post type labels.
+	 */
 	public function get_labels() {
 
 		$labels = array(
@@ -32,7 +37,7 @@ class SermonsCPT {
 			'search_items'          => __( 'Search Sermon', 'wp_sermon_manager' ),
 			'not_found'             => __( 'Not found', 'wp_sermon_manager' ),
 			'not_found_in_trash'    => __( 'Not found in Trash', 'wp_sermon_manager' ),
-			'featured_image'        => __( 'Featured Image', 'wp_sermon_manager' ),
+			'featured_image'        => __( 'Sermon Image', 'wp_sermon_manager' ),
 			'set_featured_image'    => __( 'Set featured image', 'wp_sermon_manager' ),
 			'remove_featured_image' => __( 'Remove featured image', 'wp_sermon_manager' ),
 			'use_featured_image'    => __( 'Use as featured image', 'wp_sermon_manager' ),
@@ -46,6 +51,11 @@ class SermonsCPT {
 		return $labels;
 	}
 
+	/**
+	 * Method to get the Sermon post type rewrites.
+	 *
+	 * @return array An array of post type rewrites.
+	 */
 	public function get_rewrites() {
 
 		$rewrite = array(
@@ -58,6 +68,11 @@ class SermonsCPT {
 		return $rewrite;
 	}
 
+	/**
+	 * Method to get the Sermon post type arguments.
+	 *
+	 * @return array An array of post type arguments.
+	 */
 	public function get_args() {
 
 		$labels = $this->get_labels();
@@ -73,7 +88,7 @@ class SermonsCPT {
 			'show_ui'               => true,
 			'show_in_menu'          => true,
 			'menu_position'         => 25,
-			'menu_icon'             => 'dashicons-businessperson',
+			'menu_icon'             => esc_url( plugin_dir_url( dirname( __FILE__ ) ) . 'dist/images/wpsm-menu-icon.png' ),
 			'show_in_admin_bar'     => true,
 			'show_in_nav_menus'     => true,
 			'can_export'            => true,
@@ -89,6 +104,9 @@ class SermonsCPT {
 		return $args;
 	}
 
+	/**
+	 * Method to register the Sermon post type.
+	 */
 	public function register_post_type() {
 
 		$args = $this->get_args();

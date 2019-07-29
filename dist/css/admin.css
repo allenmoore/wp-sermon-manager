@@ -1,0 +1,16 @@
+/**
+ * WP Sermon Manager: Admin Styles
+ * https://allenmoore.co
+ *
+ * Copyright (c) 2019 Allen Moore
+ * Licensed under the MIT license.
+ */
+
+.menu-icon-wpsm_sermon img {
+	width: 11px;
+	width: .6875rem;
+	height: 20px;
+	height: 1.25rem;
+}
+
+/*# sourceMappingURL=admin.css.map */

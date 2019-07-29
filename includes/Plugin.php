@@ -111,8 +111,27 @@ class Plugin {
 		$this->books_tax = new BooksTaxonomy();
 		$this->service_type_tax = new ServiceTypeTaxonomy();
 
+		add_action( 'admin_enqueue_scripts', array( $this, 'enquque_admin_styles' ) );
 		add_action( 'init', array( $this, 'i18n' ) );
 		add_action( 'init', array( $this, 'init' ) );
+	}
+
+	/**
+	 * Method that enqueues admin styles.
+	 */
+	public function enquque_admin_styles() {
+
+		$min = defined( 'SCRIPT_DEBUG' ) && filter_var( SCRIPT_DEBUG, FILTER_VALIDATE_BOOLEAN ) ? '' : '.min';
+		$plugin_url = trailingslashit( WP_SERMON_MANAGER_URL );
+
+		wp_register_style(
+			'wpsm_admin_css',
+			esc_url( $plugin_url . '/dist/css/admin' . $min . '.css' ),
+			false,
+			'1.0.0'
+		);
+
+		wp_enqueue_style( 'wpsm_admin_css' );
 	}
 
 	/**
