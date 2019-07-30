@@ -6,105 +6,108 @@
  */
 namespace WPSermonManager\Modules\Taxonomies;
 
-if ( ! defined( 'WPINC' ) )  die;
+use WPSermonManager\MenuInterface;
+use WPSermonManager\MetaInterface;
+use WPSermonManager\Modules\ModuleInterface;
+use WPSermonManager\PluginInterface;
+use WPSermonManager\Util\HasPluginTrait;
+
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
 
 /**
- * The Speakers Class.
+ * The Speakers Class
  *
- * Hanles registering the Speakers taxonomy.
+ * Handles registering the Speakers taxonomy.
  *
  * @since 1.0.0
  */
-class Speakers {
+class Speakers implements TaxonomyInterface, ModuleInterface {
+
+	use HasPluginTrait, TaxonomyTrait;
+
+	const SLUG = 'wpsm-sermon-speaker';
+
+	/** @var MenuInterface */
+	private $menu;
 
 	/**
 	 * The Speakers Constructor.
 	 */
-	public function __construct() {
-		add_action( 'init', array( $this, 'register_taxonomy' ), 0 );
+	public function __construct( MenuInterface $menu ) {
+		$this->menu = $menu;
 	}
 
 	/**
-	 * Method to get the Speaker taxonomy labels.
+	 * Method to get this module's slug
 	 *
-	 * @return array An array of taxonomy labels.
-	 */
-	public function get_labels() {
-
-		$labels = array(
-			'name'                       => _x( 'Speakers', 'Taxonomy General Name', 'wp-sermon-manager' ),
-			'singular_name'              => _x( 'Speaker', 'Taxonomy Singular Name', 'wp-sermon-manager' ),
-			'menu_name'                  => __( 'Speakers', 'wp-sermon-manager' ),
-			'all_items'                  => __( 'All Speakers', 'wp-sermon-manager' ),
-			'parent_item'                => __( 'Parent Speaker', 'wp-sermon-manafger' ),
-			'parent_item_colon'          => __( 'Parent Speaker:', 'wp-sermon-manafger' ),
-			'new_item_name'              => __( 'New SpeakerName', 'wp-sermon-manafger' ),
-			'add_new_item'               => __( 'Add New Speaker', 'wp-sermon-manafger' ),
-			'edit_item'                  => __( 'Edit Speaker', 'wp-sermon-manafger' ),
-			'update_item'                => __( 'Update Speaker', 'wp-sermon-manafger' ),
-			'view_item'                  => __( 'View Speaker', 'wp-sermon-manafger' ),
-			'separate_items_with_commas' => __( 'Separate speakers with commas', 'wp-sermon-manafger' ),
-			'add_or_remove_items'        => __( 'Add or remove speakers', 'wp-sermon-manafger' ),
-			'choose_from_most_used'      => __( 'Choose from the most used', 'wp-sermon-manafger' ),
-			'popular_items'              => __( 'Popular Speakers', 'wp-sermon-manafger' ),
-			'search_items'               => __( 'Search Speakers', 'wp-sermon-manafger' ),
-			'not_found'                  => __( 'Not Found', 'wp-sermon-manafger' ),
-			'no_terms'                   => __( 'No speakers', 'wp-sermon-manafger' ),
-			'items_list'                 => __( 'Speakers list', 'wp-sermon-manafger' ),
-			'items_list_navigation'      => __( 'Speakers list navigation', 'wp-sermon-manafger' ),
-		);
-
-		return $labels;
-	}
-
-	/**
-	 * Method to get the Speakers taxonomy rewrites.
+	 * Slugs should be unique
 	 *
-	 * @return array An array of taxonomy rewrites.
+	 * @return string
 	 */
-	public function get_rewrites() {
-
-		$rewrite = array(
-			'slug'                       => 'sermons/speakers',
-			'with_front'                 => true,
-			'hierarchical'               => false,
-		);
-
-		return $rewrite;
+	public function getModuleSlug() {
+		return 'module-' . static::SLUG;
 	}
 
 	/**
-	 * Method to get the Speakers taxonomy arguments.
+	 * Method to initialize the module. Whatever a module needs to do prior to init should be done here
 	 *
-	 * @return array An array of taxonomy arguments.
+	 * This would include hooking into the glp_lcm_init action (runs on init, but is specific to this plugin.
+	 *
+	 * @param PluginInterface $plugin
 	 */
-	public function get_args() {
-
-		$labels = $this->get_labels();
-		$rewrite = $this->get_rewrites();
-		$args = array(
-			'labels'                     => $labels,
-			'hierarchical'               => false,
-			'public'                     => true,
-			'show_ui'                    => true,
-			'show_admin_column'          => true,
-			'show_in_nav_menus'          => true,
-			'show_tagcloud'              => true,
-			'rewrite'                    => $rewrite,
-			'show_in_rest'               => true,
-			'rest_controller_class'      => 'WP_REST_Speakers_Controller',
-		);
-
-		return $args;
+	public function setupModule( PluginInterface $plugin ) {
+		$this->setPlugin( $plugin );
+		add_action( 'wp_sermon_manager_init', [$this, 'registerTaxonomy'], 15 );
 	}
 
 	/**
-	 * Method to register the Speaker taxonomy.
+	 * Method to get the taxonomy slug
+	 *
+	 * @return string
 	 */
-	public function register_taxonomy() {
+	public function getTaxonomySlug() {
+		return static::SLUG;
+	}
 
-		$args = $this->get_args();
-
-		register_taxonomy( 'wpsm_speaker', array( 'wpsm_sermon' ), $args );
+	/**
+	 * Method to register the taxonomy
+	 */
+	public function registerTaxonomy() {
+		register_taxonomy( $this->getTaxonomySlug(), $this->getPlugin()->getPostType( 'wpsm-sermon' )->getPostTypeSlug(), [
+			'labels'            => [
+				'name'                       => esc_html_x( 'Speakers', 'taxonomy general name', 'wp-sermon-manager' ),
+				'singular_name'              => esc_html_x( 'Speaker', 'taxonomy singular name', 'wp-sermon-manager' ),
+				'search_items'               => esc_html__( 'Search Speakers', 'wp-sermon-manager' ),
+				'popular_items'              => esc_html__( 'Popular Speakers', 'wp-sermon-manager' ),
+				'all_items'                  => esc_html__( 'All Speakers', 'wp-sermon-manager' ),
+				'edit_item'                  => esc_html__( 'Edit Speakes', 'wp-sermon-manager' ),
+				'view_item'                  => esc_html__( 'View Speaker', 'wp-sermon-manager' ),
+				'update_item'                => esc_html__( 'Update Speaker', 'wp-sermon-manager' ),
+				'add_new_item'               => esc_html__( 'Add New Speaker', 'wp-sermon-manager' ),
+				'new_item_name'              => esc_html__( 'New Speaker Name', 'wp-sermon-manager' ),
+				'separate_items_with_commas' => esc_html__( 'Separate speakers with commas', 'wp-sermon-manager' ),
+				'add_or_remove_items'        => esc_html__( 'Add or remove speakers', 'wp-sermon-manager' ),
+				'choose_from_most_used'      => esc_html__( 'Choose from the most used speakers', 'wp-sermon-manager' ),
+				'not_found'                  => esc_html__( 'No speakers found.', 'wp-sermon-manager' ),
+				'no_terms'                   => esc_html__( 'No speakers', 'wp-sermon-manager' ),
+				'items_list_navigation'      => esc_html__( 'Speakers list navigation', 'wp-sermon-manager' ),
+				'items_list'                 => esc_html__( 'Speakers list', 'wp-sermon-manager' ),
+			],
+			'public'            => true,
+			'hierarchical'      => false,
+			'show_ui'           => true,
+			'show_in_menu'      => true,
+			'show_in_nav_menus' => false,
+			'show_admin_column' => true,
+			'meta_box_cb'       => false,
+			'rewrite'           => [
+				'slug'         => 'sermons/speakers',
+				'with_front'   => true,
+				'hierarchical' => false,
+			],
+			'show_in_rest'      => true,
+		] );
 	}
 }

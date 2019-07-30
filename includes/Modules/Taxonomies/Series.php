@@ -6,105 +6,109 @@
  */
 namespace WPSermonManager\Modules\Taxonomies;
 
-if ( ! defined( 'WPINC' ) )  die;
+use WPSermonManager\MenuInterface;
+use WPSermonManager\MetaInterface;
+use WPSermonManager\Modules\ModuleInterface;
+use WPSermonManager\PluginInterface;
+use WPSermonManager\Util\HasPluginTrait;
+
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
 
 /**
- * The Series Class.
+ * The Series Class
  *
- * Hanles registering the Series taxonomy.
+ * Handles registering the Series taxonomy.
  *
  * @since 1.0.0
  */
-class Series {
+class Series implements TaxonomyInterface, ModuleInterface {
+
+	use HasPluginTrait, TaxonomyTrait;
+
+	const SLUG = 'wpsm-sermon-series';
+
+	/** @var MenuInterface */
+	private $menu;
 
 	/**
 	 * The Series Constructor.
 	 */
-	public function __construct() {
-		add_action( 'init', array( $this, 'register_taxonomy' ), 0 );
+	public function __construct( MenuInterface $menu ) {
+		$this->menu = $menu;
 	}
 
 	/**
-	 * Method to get the Series taxonomy labels.
+	 * Method to get this module's slug
 	 *
-	 * @return array An array of taxonomy labels.
-	 */
-	public function get_labels() {
-
-		$labels = array(
-			'name'                       => _x( 'Series', 'Taxonomy General Name', 'wp-sermon-manager' ),
-			'singular_name'              => _x( 'Series', 'Taxonomy Singular Name', 'wp-sermon-manager' ),
-			'menu_name'                  => __( 'Series', 'wp-sermon-manager' ),
-			'all_items'                  => __( 'All Series', 'wp-sermon-manager' ),
-			'parent_item'                => __( 'Parent Series', 'wp-sermon-manager' ),
-			'parent_item_colon'          => __( 'Parent Series:', 'wp-sermon-manager' ),
-			'new_item_name'              => __( 'New SeriesName', 'wp-sermon-manager' ),
-			'add_new_item'               => __( 'Add New Series', 'wp-sermon-manager' ),
-			'edit_item'                  => __( 'Edit Series', 'wp-sermon-manager' ),
-			'update_item'                => __( 'Update Series', 'wp-sermon-manager' ),
-			'view_item'                  => __( 'View Series', 'wp-sermon-manager' ),
-			'separate_items_with_commas' => __( 'Separate series with commas', 'wp-sermon-manager' ),
-			'add_or_remove_items'        => __( 'Add or remove series', 'wp-sermon-manager' ),
-			'choose_from_most_used'      => __( 'Choose from the most used', 'wp-sermon-manager' ),
-			'popular_items'              => __( 'Popular Series', 'wp-sermon-manager' ),
-			'search_items'               => __( 'Search Series', 'wp-sermon-manager' ),
-			'not_found'                  => __( 'Not Found', 'wp-sermon-manager' ),
-			'no_terms'                   => __( 'No series', 'wp-sermon-manager' ),
-			'items_list'                 => __( 'Series list', 'wp-sermon-manager' ),
-			'items_list_navigation'      => __( 'Series list navigation', 'wp-sermon-manager' ),
-		);
-
-		return $labels;
-	}
-
-	/**
-	 * Method to get the Series taxonomy rewrites.
+	 * Slugs should be unique
 	 *
-	 * @return array An array of taxonomy rewrites.
+	 * @return string
 	 */
-	public function get_rewrites() {
-
-		$rewrite = array(
-			'slug'                       => 'sermons/series',
-			'with_front'                 => true,
-			'hierarchical'               => false,
-		);
-
-		return $rewrite;
+	public function getModuleSlug() {
+		return 'module-' . static::SLUG;
 	}
 
 	/**
-	 * Method to get the Series taxonomy arguments.
+	 * Method to initialize the module. Whatever a module needs to do prior to init should be done here.
 	 *
-	 * @return array An array of taxonomy arguments.
+	 * This would include hooking into the glp_lcm_init action (runs on init, but is specific to this plugin.
+	 *
+	 * @param PluginInterface $plugin
 	 */
-	public function get_args() {
-
-		$labels = $this->get_labels();
-		$rewrite = $this->get_rewrites();
-		$args = array(
-			'labels'                     => $labels,
-			'hierarchical'               => false,
-			'public'                     => true,
-			'show_ui'                    => true,
-			'show_admin_column'          => true,
-			'show_in_nav_menus'          => true,
-			'show_tagcloud'              => true,
-			'rewrite'                    => $rewrite,
-			'show_in_rest'               => true,
-			'rest_controller_class'      => 'WP_REST_Series_Controller',
-		);
-
-		return $args;
+	public function setupModule( PluginInterface $plugin ) {
+		$this->setPlugin( $plugin );
+		add_action( 'wp_sermon_manager_init', [$this, 'registerTaxonomy'], 15 );
 	}
 
 	/**
-	 * Method to register the Series taxonomy.
+	 * Method to get the taxonomy slug
+	 *
+	 * @return string
 	 */
-	public function register_taxonomy() {
+	public function getTaxonomySlug() {
+		return static::SLUG;
+	}
 
-		$args = $this->get_args();
-
-		register_taxonomy( 'wpsm_sermon_series', array( 'wpsm_sermon' ), $args );
+	/**
+	 * Method to register the taxonomy
+	 */
+	public function registerTaxonomy() {
+		register_taxonomy( $this->getTaxonomySlug(),
+			$this->getPlugin()->getPostType( 'wpsm-sermon' )->getPostTypeSlug(), [
+				'labels'            => [
+					'name'                       => esc_html_x( 'Series', 'taxonomy general name', 'wp-sermon-manager' ),
+					'singular_name'              => esc_html_x( 'Series', 'taxonomy singular name', 'wp-sermon-manager' ),
+					'search_items'               => esc_html__( 'Search Series', 'wp-sermon-manager' ),
+					'popular_items'              => esc_html__( 'Popular Series', 'wp-sermon-manager' ),
+					'all_items'                  => esc_html__( 'All Series', 'wp-sermon-manager' ),
+					'edit_item'                  => esc_html__( 'Edit Series', 'wp-sermon-manager' ),
+					'view_item'                  => esc_html__( 'View Series', 'wp-sermon-manager' ),
+					'update_item'                => esc_html__( 'Update Series', 'wp-sermon-manager' ),
+					'add_new_item'               => esc_html__( 'Add New Series', 'wp-sermon-manager' ),
+					'new_item_name'              => esc_html__( 'New Series Name', 'wp-sermon-manager' ),
+					'separate_items_with_commas' => esc_html__( 'Separate series with commas', 'wp-sermon-manager' ),
+					'add_or_remove_items'        => esc_html__( 'Add or remove series', 'wp-sermon-manager' ),
+					'choose_from_most_used'      => esc_html__( 'Choose from the most used series', 'wp-sermon-manager' ),
+					'not_found'                  => esc_html__( 'No series found.', 'wp-sermon-manager' ),
+					'no_terms'                   => esc_html__( 'No series', 'wp-sermon-manager' ),
+					'items_list_navigation'      => esc_html__( 'Series list navigation', 'wp-sermon-manager' ),
+					'items_list'                 => esc_html__( 'Series list', 'wp-sermon-manager' ),
+				],
+				'public'            => true,
+				'hierarchical'      => false,
+				'show_ui'           => true,
+				'show_in_menu'      => true,
+				'show_in_nav_menus' => false,
+				'show_admin_column' => true,
+				'meta_box_cb'       => false,
+				'rewrite'           => [
+					'slug'                       => 'sermons/series',
+					'with_front'                 => true,
+					'hierarchical'               => false,
+				],
+				'show_in_rest'      => true,
+			] );
 	}
 }

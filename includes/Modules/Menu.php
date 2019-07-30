@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * Menu
+ *
+ * @package WPSermonManager\Modules
+ */
 namespace WPSermonManager\Modules;
 
 use WPSermonManager\MenuInterface;
@@ -7,14 +11,22 @@ use WPSermonManager\PluginInterface;
 use WPSermonManager\Util\HasPluginInterface;
 use WPSermonManager\Util\HasPluginTrait;
 
+/**
+ * The Menu Class.
+ *
+ * Handles the implementation of new menu item for WPSM.
+ *
+ * @since 1.0.0
+ */
 class Menu implements ModuleInterface, MenuInterface, HasPluginInterface {
 
+	/** @var string */
 	const SLUG = 'wp-sermon-manager';
 
 	use HasPluginTrait;
 
 	/**
-	 * Get this module's slug
+	 * Method to get this module's slug
 	 *
 	 * Slugs should be unique
 	 *
@@ -25,9 +37,10 @@ class Menu implements ModuleInterface, MenuInterface, HasPluginInterface {
 	}
 
 	/**
-	 * Initialize the module. Whatever a module needs to do prior to init should be done here.
+	 * Method to initialize the module
 	 *
-	 * This would include hooking into the glp_lcm_init action (runs on init, but is specific to this plugin.
+	 * Whatever a module needs to do prior to init should be done here. This would include hooking into the
+	 * wp_sermon_manager_init action (runs on init, but is specific to this plugin.
 	 *
 	 * @param PluginInterface $plugin
 	 */
@@ -36,7 +49,7 @@ class Menu implements ModuleInterface, MenuInterface, HasPluginInterface {
 	}
 
 	/**
-	 * Get the menu slug
+	 * Method to get the menu slug
 	 *
 	 * @return string
 	 */
@@ -45,7 +58,7 @@ class Menu implements ModuleInterface, MenuInterface, HasPluginInterface {
 	}
 
 	/**
-	 * Add a submenu to this menu
+	 * Metho to add a submenu to this menu
 	 *
 	 * @param string $title
 	 * @param string $menuLabel
@@ -65,7 +78,7 @@ class Menu implements ModuleInterface, MenuInterface, HasPluginInterface {
 	}
 
 	/**
-	 * Remove a submenu from this menu
+	 * Method to remove a submenu from this menu
 	 *
 	 * @param string $menuSlug
 	 *
@@ -76,7 +89,7 @@ class Menu implements ModuleInterface, MenuInterface, HasPluginInterface {
 	}
 
 	/**
-	 * Admin init action
+	 * Method to init that admin menu action
 	 */
 	public function adminMenu() {
 
@@ -91,6 +104,11 @@ class Menu implements ModuleInterface, MenuInterface, HasPluginInterface {
 		);
 	}
 
+	/**
+	 * Method to get the capability required to edit
+	 *
+	 * @return string
+	 */
 	private function getEditCapability() {
 
 		if ( ! $this->getPlugin()->getPostType( 'wpsm-sermon' ) ) {
@@ -100,6 +118,11 @@ class Menu implements ModuleInterface, MenuInterface, HasPluginInterface {
 		return $this->getPlugin()->getPostType( 'wpsm-sermon' )->getCaps()->edit_posts;
 	}
 
+	/**
+	 * Method to prioritize the menu
+	 *
+	 * @param $priority
+	 */
 	private function prioritizeMenu( $priority ) {
 
 		global $submenu;

@@ -1,25 +1,36 @@
 <?php
-
+/**
+ * Meta Interface
+ *
+ * @package WPSermonManager
+ */
 namespace WPSermonManage;
 
+/**
+ * Interface MetaInterface
+ *
+ * Handles method declaration when registering meta objects.
+ *
+ * @since 1.0.0
+ */
 interface MetaInterface {
 
 	/**
-	 * Get the meta key for this meta
+	 * Method to getthe meta key for this meta
 	 *
 	 * @return string
 	 */
 	public function getMetaKey();
 
 	/**
-	 * Set up the post type
+	 * Method to setup the post type
 	 *
 	 * @return $this
 	 */
 	public function setupMetaObject();
 
 	/**
-	 * Get the meta value for this meta object
+	 * Method to getthe meta value for this meta object
 	 *
 	 * @param int $objectId
 	 * @param mixed $default

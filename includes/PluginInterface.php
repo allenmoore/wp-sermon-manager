@@ -1,11 +1,22 @@
 <?php
-
+/**
+ * Plugin Interface
+ *
+ * @package WPSermonManager
+ */
 namespace WPSermonManager;
 
 use WPSermonManager\Modules\ModuleInterface;
 use WPSermonManager\Modules\PostTypes\PostTypeInterface;
 use WPSermonManager\Modules\Taxonomies\TaxonomyInterface;
 
+/**
+ * Interface PluginInterface
+ *
+ * Handles method declaration for plugins.
+ *
+ * @since 1.0.0
+ */
 interface PluginInterface {
 
 	/**
@@ -76,7 +87,8 @@ interface PluginInterface {
 	 *
 	 * @param string $__template_file
 	 * @param array $__template_data
+	 * @param boolean $__admin_tmpl
 	 */
-	public function template( $__template_file, array $__template_data = [ ] );
+	public function template( $__template_file, array $__template_data = [ ], bool $__admin_tmpl = false );
 
 }

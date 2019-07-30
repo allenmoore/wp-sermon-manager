@@ -1,13 +1,25 @@
 <?php
-
+/**
+ * Sermon App
+ *
+ * @package WPSermonManager\Modules
+ */
 namespace WPSermonManager\Modules;
 
 use WPSermonManager\Modules\ActivitiesApp\TypeInterface;
 use WPSermonManager\PluginInterface;
 use WPSermonManager\Util\HasPluginTrait;
 
+/**
+ * The SermonsApp Class.
+ *
+ * Handles implementing the Sermon App module.
+ *
+ * @since 1.0.0
+ */
 class SermonsApp implements ModuleInterface {
 
+	/** @var string */
 	const KEY = 'wpsm-sermons-app-mn';
 
 	use HasPluginTrait;
@@ -16,7 +28,7 @@ class SermonsApp implements ModuleInterface {
 	private $types = [ ];
 
 	/**
-	 * Get this module's slug
+	 * Method to get this module's slug
 	 *
 	 * Slugs should be unique
 	 *
@@ -27,7 +39,7 @@ class SermonsApp implements ModuleInterface {
 	}
 
 	/**
-	 * Initialize the module. Whatever a module needs to do prior to init should be done here.
+	 * Method to initialize the module. Whatever a module needs to do prior to init should be done here.
 	 *
 	 * This would include hooking into the glp_lcm_init action (runs on init, but is specific to this plugin.
 	 *
@@ -39,18 +51,16 @@ class SermonsApp implements ModuleInterface {
 	}
 
 	/**
-	 * Register default activity types
+	 * Method to register default sermon types
 	 *
 	 * Also does an action to let other code hook in and register types
 	 */
 	public function registerDefaultTypes() {
-		// Add default types here
-
 		do_action( 'wp_sermon_manager_app_init', $this );
 	}
 
 	/**
-	 * Register scripts and styles
+	 * Method to register scripts and styles
 	 */
 	public function registerAssets() {
 
@@ -68,7 +78,7 @@ class SermonsApp implements ModuleInterface {
 	}
 
 	/**
-	 * Render the app for a post
+	 * Method to render the app for a post
 	 *
 	 * @param \WP_Post $post
 	 */
@@ -86,7 +96,7 @@ class SermonsApp implements ModuleInterface {
 	}
 
 	/**
-	 * Register a type interface
+	 * Method to register a type interface
 	 *
 	 * @param TypeInterface $type
 	 */
@@ -95,7 +105,7 @@ class SermonsApp implements ModuleInterface {
 	}
 
 	/**
-	 * Get a registered type object
+	 * Method to get a registered type object
 	 *
 	 * @param string|TypeInterface $type
 	 *

@@ -1,13 +1,24 @@
 <?php
-
+/**
+ * WP_Query Factory Trait
+ *
+ * @package WPSermonManager\Util
+ */
 namespace WPSermonManager\Util;
 
 use WP_Query;
 
+/**
+ * Trait WpQueryFactoryTrait
+ *
+ * Handles method inheritance and reuse for WP_Query objects.
+ *
+ * @since 1.0.0
+ */
 trait WpQueryFactoryTrait {
 
 	/**
-	 * Get a new WP Query
+	 * Method to get a new WP Query
 	 *
 	 * @return WP_Query
 	 */

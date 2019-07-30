@@ -2,7 +2,7 @@
 /**
  * Plugin
  *
- * @package WPSM\Plugin
+ * @package WPSermonManager
  */
 namespace WPSermonManager;
 
@@ -10,14 +10,6 @@ use WPSermonManager\Modules\ModuleInterface;
 use WPSermonManager\Modules\PostTypes\PostTypeInterface;
 use WPSermonManager\Modules\Taxonomies\TaxonomyInterface;
 use WPSermonManager\Util\HasPluginInterface;
-use WPSermonManager\Admin\Settings\General;
-use WPSermonManager\Admin\Users\Roles;
-use WPSermonManager\Modules\Filters\Fields\SermonTitle;
-use WPSermonManager\Modules\PostTypes\Sermons;
-use WPSermonManager\Modules\Taxonomies\Books;
-use WPSermonManager\Modules\Taxonomies\Series;
-use WPSermonManager\Modules\Taxonomies\Speakers;
-use WPSermonManager\Modules\Taxonomies\Topics;
 
 if ( ! defined( 'WPINC' ) )  die;
 
@@ -43,7 +35,7 @@ class Plugin implements PluginInterface {
 	private $menus = [ ];
 
 	/**
-	 * Setup the plugin's main functionality
+	 * Method to setup the plugin's main functionality
 	 */
 	public function setup() {
 
@@ -58,7 +50,7 @@ class Plugin implements PluginInterface {
 	}
 
 	/**
-	 * Register a module with the plugin
+	 * Method to register a module with the plugin
 	 *
 	 * @param ModuleInterface $module
 	 *
@@ -90,7 +82,7 @@ class Plugin implements PluginInterface {
 	}
 
 	/**
-	 * Register a post type object
+	 * Method to register a post type object
 	 *
 	 * @param PostTypeInterface $postType
 	 *
@@ -108,7 +100,7 @@ class Plugin implements PluginInterface {
 	}
 
 	/**
-	 * Get a post type object
+	 * Method to get a post type object
 	 *
 	 * @param string $name
 	 *
@@ -118,6 +110,13 @@ class Plugin implements PluginInterface {
 		return isset( $this->postTypes[ $name ] ) ? $this->postTypes[ $name ] : null;
 	}
 
+	/**
+	 * Method to register a taxonomy object
+	 *
+	 * @param TaxonomyInterface $taxonomy
+	 *
+	 * @return $this
+	 */
 	public function registerTaxonomy( TaxonomyInterface $taxonomy ) {
 
 		$taxonomySlug = $taxonomy->getTaxonomySlug();
@@ -129,12 +128,21 @@ class Plugin implements PluginInterface {
 		return $this;
 	}
 
+	/**
+	 * Method to get a taxonomy object
+	 *
+	 * @param string $name
+	 *
+	 * @return TaxonomyInterface|null
+	 */
 	public function getTaxonomy( $name ) {
 		return isset( $this->taxonomies[ $name ] ) ? $this->taxonomies[ $name ] : null;
 	}
 
 	/**
-	 * Get a menu object. By default it will return the first available menu
+	 * Method to get a menu object
+	 *
+	 * By default it will return the first available menu
 	 *
 	 * @param string $slug
 	 *
@@ -150,7 +158,7 @@ class Plugin implements PluginInterface {
 	}
 
 	/**
-	 * Add another menu
+	 * Method to add another menu
 	 *
 	 * @param MenuInterface $menu
 	 *
@@ -183,9 +191,7 @@ class Plugin implements PluginInterface {
 	}
 
 	/**
-	 * Method that sets up the text domain.
-	 *
-	 * @return void
+	 * Method to set up the text domain
 	 */
 	public function setupL10n() {
 

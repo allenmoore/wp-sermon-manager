@@ -6,105 +6,110 @@
  */
 namespace WPSermonManager\Modules\Taxonomies;
 
-if ( ! defined( 'WPINC' ) )  die;
+use WPSermonManager\MenuInterface;
+use WPSermonManager\MetaInterface;
+use WPSermonManager\Modules\ModuleInterface;
+use WPSermonManager\PluginInterface;
+use WPSermonManager\Util\HasPluginTrait;
+
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
 
 /**
- * The Topics Class.
+ * The Topics Class
  *
- * Hanles registering the Topics taxonomy.
+ * Handles registering the Topics taxonomy.
  *
  * @since 1.0.0
  */
-class Topics {
+class Topics implements TaxonomyInterface, ModuleInterface {
+
+	use HasPluginTrait, TaxonomyTrait;
+
+	const SLUG = 'wpsm-sermon-topic';
+
+	/** @var MenuInterface */
+	private $menu;
 
 	/**
 	 * The Topics Constructor.
 	 */
-	public function __construct() {
-		add_action( 'init', array( $this, 'register_taxonomy' ), 0 );
+	public function __construct( MenuInterface $menu ) {
+		$this->menu = $menu;
 	}
 
 	/**
-	 * Method to get the Topics taxonomy labels.
+	 * Method to get this module's slug
 	 *
-	 * @return array An array of taxonomy labels.
-	 */
-	public function get_labels() {
-
-		$labels = array(
-			'name'                       => _x( 'Topics', 'Taxonomy General Name', 'wp-sermon-manager' ),
-			'singular_name'              => _x( 'Topic', 'Taxonomy Singular Name', 'wp-sermon-manager' ),
-			'menu_name'                  => __( 'Topics', 'wp-sermon-manager' ),
-			'all_items'                  => __( 'All Topics', 'wp-sermon-manager' ),
-			'parent_item'                => __( 'Parent Topic', 'wp-sermon-manager' ),
-			'parent_item_colon'          => __( 'Parent Topic:', 'wp-sermon-manager' ),
-			'new_item_name'              => __( 'New Topic Name', 'wp-sermon-manager' ),
-			'add_new_item'               => __( 'Add New Topic', 'wp-sermon-manager' ),
-			'edit_item'                  => __( 'Edit Topic', 'wp-sermon-manager' ),
-			'update_item'                => __( 'Update Topic', 'wp-sermon-manager' ),
-			'view_item'                  => __( 'View Topic', 'wp-sermon-manager' ),
-			'separate_items_with_commas' => __( 'Separate topics with commas', 'wp-sermon-manager' ),
-			'add_or_remove_items'        => __( 'Add or remove topics', 'wp-sermon-manager' ),
-			'choose_from_most_used'      => __( 'Choose from the most used', 'wp-sermon-manager' ),
-			'popular_items'              => __( 'Popular Topics', 'wp-sermon-manager' ),
-			'search_items'               => __( 'Search Topics', 'wp-sermon-manager' ),
-			'not_found'                  => __( 'Not Found', 'wp-sermon-manager' ),
-			'no_terms'                   => __( 'No topics', 'wp-sermon-manager' ),
-			'items_list'                 => __( 'Topics list', 'wp-sermon-manager' ),
-			'items_list_navigation'      => __( 'Topics list navigation', 'wp-sermon-manager' ),
-		);
-
-		return $labels;
-	}
-
-	/**
-	 * Method to get the Topics taxonomy rewrites.
+	 * Slugs should be unique
 	 *
-	 * @return array An array of taxonomy rewrites.
+	 * @return string
 	 */
-	public function get_rewrites() {
-
-		$rewrite = array(
-			'slug'                       => 'sermons/topics',
-			'with_front'                 => true,
-			'hierarchical'               => false,
-		);
-
-		return $rewrite;
+	public function getModuleSlug() {
+		return 'module-' . static::SLUG;
 	}
 
 	/**
-	 * Method to get the Topics taxonomy arguments.
+	 * Method to initialize the module. Whatever a module needs to do prior to init should be done here
 	 *
-	 * @return array An array of taxonomy arguments.
+	 * This would include hooking into the glp_lcm_init action (runs on init, but is specific to this plugin.
+	 *
+	 * @param PluginInterface $plugin
 	 */
-	public function get_args() {
-
-		$labels = $this->get_labels();
-		$rewrite = $this->get_rewrites();
-		$args = array(
-			'labels'                     => $labels,
-			'hierarchical'               => false,
-			'public'                     => true,
-			'show_ui'                    => true,
-			'show_admin_column'          => true,
-			'show_in_nav_menus'          => true,
-			'show_tagcloud'              => true,
-			'rewrite'                    => $rewrite,
-			'show_in_rest'               => true,
-			'rest_controller_class'      => 'WP_REST_Topic_Controller',
-		);
-
-		return $args;
+	public function setupModule( PluginInterface $plugin ) {
+		$this->setPlugin( $plugin );
+		add_action( 'wp_sermon_manager_init', [$this, 'registerTaxonomy'], 15 );
 	}
 
 	/**
-	 * Method to register the Topics taxonomy.
+	 * Method to get the taxonomy slug
+	 *
+	 * @return string
 	 */
-	public function register_taxonomy() {
+	public function getTaxonomySlug() {
+		return static::SLUG;
+	}
 
-		$args = $this->get_args();
+	/**
+	 * Method to register the taxonomy
+	 */
+	public function registerTaxonomy() {
 
-		register_taxonomy( 'wpsm_sermon_topics', array( 'wpsm_sermon' ), $args );
+		register_taxonomy( $this->getTaxonomySlug(),
+			$this->getPlugin()->getPostType( 'wpsm-sermon' )->getPostTypeSlug(), [
+			'labels'            => [
+				'name'                       => esc_html_x( 'Topics', 'taxonomy general name', 'wp-sermon-manager' ),
+				'singular_name'              => esc_html_x( 'Topic', 'taxonomy singular name', 'wp-sermon-manager' ),
+				'search_items'               => esc_html__( 'Search Topics', 'wp-sermon-manager' ),
+				'popular_items'              => esc_html__( 'Popular Topics', 'wp-sermon-manager' ),
+				'all_items'                  => esc_html__( 'All Topics', 'wp-sermon-manager' ),
+				'edit_item'                  => esc_html__( 'Edit Speakes', 'wp-sermon-manager' ),
+				'view_item'                  => esc_html__( 'View Topic', 'wp-sermon-manager' ),
+				'update_item'                => esc_html__( 'Update Topic', 'wp-sermon-manager' ),
+				'add_new_item'               => esc_html__( 'Add New Topic', 'wp-sermon-manager' ),
+				'new_item_name'              => esc_html__( 'New Topic Name', 'wp-sermon-manager' ),
+				'separate_items_with_commas' => esc_html__( 'Separate topics with commas', 'wp-sermon-manager' ),
+				'add_or_remove_items'        => esc_html__( 'Add or remove topics', 'wp-sermon-manager' ),
+				'choose_from_most_used'      => esc_html__( 'Choose from the most used topics', 'wp-sermon-manager' ),
+				'not_found'                  => esc_html__( 'No topics found.', 'wp-sermon-manager' ),
+				'no_terms'                   => esc_html__( 'No topics', 'wp-sermon-manager' ),
+				'items_list_navigation'      => esc_html__( 'Topics list navigation', 'wp-sermon-manager' ),
+				'items_list'                 => esc_html__( 'Topics list', 'wp-sermon-manager' ),
+			],
+			'public'            => true,
+			'hierarchical'      => false,
+			'show_ui'           => true,
+			'show_in_menu'      => true,
+			'show_in_nav_menus' => false,
+			'show_admin_column' => true,
+			'meta_box_cb'       => false,
+			'rewrite'           => [
+				'slug'         => 'sermons/topics',
+				'with_front'   => true,
+				'hierarchical' => false,
+			],
+			'show_in_rest'      => true,
+		] );
 	}
 }

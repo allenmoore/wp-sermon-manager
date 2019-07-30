@@ -1,6 +1,18 @@
 <?php
+/**
+ * Options Trait
+ *
+ * @package WPSermonManager\Util
+ */
 namespace WPSermonManager\Util;
 
+/**
+ * Trait OptionsTrait
+ *
+ * Handles method inheritance and reuse for option objects.
+ *
+ * @since 1.0.0
+ */
 trait OptionsTrait {
 
 	/** @var bool */
@@ -11,7 +23,7 @@ trait OptionsTrait {
 	protected $defaultOptionsData = [ ];
 
 	/**
-	 * Get an option item
+	 * Method to get an option item
 	 *
 	 * $key should permit separating keys with a period, so that, for example, 'foo.bar' would map to 5 here:
 	 * [
@@ -40,7 +52,7 @@ trait OptionsTrait {
 	}
 
 	/**
-	 * Set an option item
+	 * Method to set an option item
 	 *
 	 * $key should permit separating keys with a period, so that, for example, 'foo.bar' would map to 5 here:
 	 * [
@@ -71,7 +83,7 @@ trait OptionsTrait {
 	}
 
 	/**
-	 * Delete an option item
+	 * Method to delete an option item
 	 *
 	 * $key should permit separating keys with a period, so that, for example, 'foo.bar' would map to 5 here:
 	 * [
@@ -107,14 +119,14 @@ trait OptionsTrait {
 	}
 
 	/**
-	 * Get the option name used to look up the option
+	 * Method to get the option name used to look up the option
 	 *
 	 * @return string
 	 */
 	abstract public function getOptionKey();
 
 	/**
-	 * Initialize the options object if necessary
+	 * Method to initialize the options object if necessary
 	 */
 	private function initializeOptionsData() {
 		if ( ! $this->optionsInitialized ) {

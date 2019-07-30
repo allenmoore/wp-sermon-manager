@@ -1,20 +1,31 @@
 <?php
-
+/**
+ * Plugin Interface validation.
+ *
+ * @package WPSermonManager\Util
+ */
 namespace WPSermonManager\Util;
 
 use WPSermonManager\PluginInterface;
 
+/**
+ * Interface HasPluginInterface
+ *
+ * Handles validating that a module has the plugin interface.
+ *
+ * @since 1.0.0
+ */
 interface HasPluginInterface {
 
 	/**
-	 * Get the plugin
+	 * Method to get the plugin
 	 *
 	 * @return PluginInterface
 	 */
 	public function getPlugin();
 
 	/**
-	 * Set the plugin
+	 * Method to set the plugin
 	 *
 	 * @param PluginInterface $plugin
 	 */

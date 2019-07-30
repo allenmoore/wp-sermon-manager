@@ -1,7 +1,18 @@
 <?php
-
+/**
+ * Menu Interface
+ *
+ * @package WPSermonManager
+ */
 namespace WPSermonManager;
 
+/**
+ * Interface MenuInterface
+ *
+ * Handles method declaration when registering menu objects.
+ *
+ * @since 1.0.0
+ */
 interface MenuInterface {
 
 	/**

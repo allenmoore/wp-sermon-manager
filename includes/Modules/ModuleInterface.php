@@ -1,13 +1,24 @@
 <?php
-
+/**
+ * Module Interface
+ *
+ * @package WPSermonManager\Modules
+ */
 namespace WPSermonManager\Modules;
 
 use WPSermonManager\PluginInterface;
 
+/**
+ * Interface ModuleInterface
+ *
+ * Handles method declaration when registering a module.
+ *
+ * @package WPSermonManager\Modules
+ */
 interface ModuleInterface {
 
 	/**
-	 * Get this module's slug
+	 * Method to get this module's slug
 	 *
 	 * Slugs should be unique
 	 *
@@ -16,7 +27,7 @@ interface ModuleInterface {
 	public function getModuleSlug();
 
 	/**
-	 * Initialize the module. Whatever a module needs to do prior to init should be done here.
+	 * Method to initialize the module. Whatever a module needs to do prior to init should be done here.
 	 *
 	 * This would include hooking into the glp_lcm_init action (runs on init, but is specific to this plugin.
 	 *

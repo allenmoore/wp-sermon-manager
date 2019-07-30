@@ -1,39 +1,50 @@
 <?php
-
+/**
+ * Taxonomy Interface
+ *
+ * @package WPSermonManager\Modules\Taxonomies
+ */
 namespace WPSermonManager\Modules\Taxonomies;
 
 use WPSermonManager\MetaInterface;
 
+/**
+ * Interface TaxonomyInterface
+ *
+ * Handles method declaration when registering taxonomy objects.
+ *
+ * @since 1.0.0
+ */
 interface TaxonomyInterface {
 
 	/**
-	 * Get the taxonomy slug
+	 * Method to get the taxonomy slug
 	 *
 	 * @return string
 	 */
 	public function getTaxonomySlug();
 
 	/**
-	 * Register the taxonomy
+	 * Method to register the taxonomy
 	 */
 	public function registerTaxonomy();
 
 	/**
-	 * Get the labels for this taxonomy
+	 * Method to get the labels for this taxonomy
 	 *
 	 * @return object
 	 */
 	public function getLabels();
 
 	/**
-	 * Get the capabilities for this taxonomy
+	 * Method to get the capabilities for this taxonomy
 	 *
 	 * @return object
 	 */
 	public function getCaps();
 
 	/**
-	 * Register meta for this taxonomy
+	 * Method to register meta for this taxonomy
 	 *
 	 * @param MetaInterface $meta
 	 *

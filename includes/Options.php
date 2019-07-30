@@ -1,13 +1,18 @@
 <?php
-
+/**
+ * Options
+ *
+ * @package WPSermonManager
+ */
 namespace WPSermonManager;
 
 use WPSermonManager\Util\OptionsInterface;
 use WPSermonManager\Util\OptionsTrait;
 
 /**
- * Class Options
- * @package WPSermonManager
+ * The Options Class
+ *
+ * @since 1.0.0
  *
  * @property-read string $experience_rewrite_slug The Experience post type rewrite slug
  */
@@ -15,8 +20,12 @@ class Options implements OptionsInterface {
 
 	use OptionsTrait;
 
-	const SLUG = 'glp-lcm-options';
+	/** @var string */
+	const SLUG = 'wp-sermon-manager-options';
 
+	/**
+	 * The Options Constructor
+	 */
 	public function __construct() {
 		$this->defaultOptionsData = [
 			'experience' => [
@@ -26,6 +35,8 @@ class Options implements OptionsInterface {
 	}
 
 	/**
+	 * Method to get the options
+	 *
 	 * @param string $name
 	 *
 	 * @return mixed
@@ -44,7 +55,7 @@ class Options implements OptionsInterface {
 	}
 
 	/**
-	 * Get the option name used to look up the option
+	 * Method to get the option name used to look up the option
 	 *
 	 * @return string
 	 */

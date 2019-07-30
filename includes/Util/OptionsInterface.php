@@ -1,11 +1,22 @@
 <?php
-
+/**
+ * Options Interface
+ *
+ * @package WPSermonManager\Util
+ */
 namespace WPSermonManager\Util;
 
+/**
+ * Interface OptionsInterface
+ *
+ * Handles method declaration when registering an option object.
+ *
+ * @package WPSermonManager\Util
+ */
 interface OptionsInterface {
 
 	/**
-	 * Get an option item
+	 * Method to get an option item
 	 *
 	 * $key should permit separating keys with a period, so that, for example, 'foo.bar' would map to 5 here:
 	 * [
@@ -22,7 +33,7 @@ interface OptionsInterface {
 	public function get( $key, $default = null );
 
 	/**
-	 * Set an option item
+	 * Method to set an option item
 	 *
 	 * $key should permit separating keys with a period, so that, for example, 'foo.bar' would map to 5 here:
 	 * [
@@ -37,7 +48,7 @@ interface OptionsInterface {
 	public function set( $key, $value );
 
 	/**
-	 * Delete an option item
+	 * Method to delete an option item
 	 *
 	 * $key should permit separating keys with a period, so that, for example, 'foo.bar' would map to 5 here:
 	 * [
@@ -51,7 +62,7 @@ interface OptionsInterface {
 	public function delete( $key );
 
 	/**
-	 * Get the option name used to look up the option
+	 * Method to get the option name used to look up the option
 	 *
 	 * @return string
 	 */

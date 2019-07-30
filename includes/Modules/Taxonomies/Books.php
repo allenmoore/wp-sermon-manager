@@ -15,9 +15,9 @@ use WPSermonManager\Util\HasPluginTrait;
 if ( ! defined( 'WPINC' ) )  die;
 
 /**
- * The Books Class.
+ * The Books Class
  *
- * Hanles registering the Books taxonomy.
+ * Handles registering the Books taxonomy.
  *
  * @since 1.0.0
  */
@@ -57,7 +57,7 @@ class Books implements TaxonomyInterface, ModuleInterface {
 	 */
 	public function setupModule( PluginInterface $plugin ) {
 		$this->setPlugin( $plugin );
-		add_action( 'wp_sermon_manager_init', [ $this, 'registerTaxonomy' ], 15 );
+		add_action( 'wp_sermon_manager_init', [$this, 'registerTaxonomy'], 15 );
 	}
 
 	/**
@@ -75,8 +75,7 @@ class Books implements TaxonomyInterface, ModuleInterface {
 	public function registerTaxonomy() {
 		register_taxonomy(
 			$this->getTaxonomySlug(),
-			$this->getPlugin()->getPostType( 'wpsm-sermon' )->getPostTypeSlug(),
-			[
+			$this->getPlugin()->getPostType( 'wpsm-sermon' )->getPostTypeSlug(), [
 				'labels'            => [
 					'name'                       => esc_html_x( 'Books', 'taxonomy general name', 'wp-sermon-manager' ),
 					'singular_name'              => esc_html_x( 'Book', 'taxonomy singular name', 'wp-sermon-manager' ),
@@ -103,7 +102,11 @@ class Books implements TaxonomyInterface, ModuleInterface {
 				'show_in_nav_menus' => false,
 				'show_admin_column' => true,
 				'meta_box_cb'       => false,
-				'rewrite'           => false,
+				'rewrite'           => [
+					'slug'                       => 'sermons/books',
+					'with_front'                 => true,
+					'hierarchical'               => false,
+				],
 				'show_in_rest'      => true,
 			]
 		);
