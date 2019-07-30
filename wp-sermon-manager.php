@@ -43,21 +43,12 @@ define( 'WP_SERMON_MANAGER_URL',     plugin_dir_url( __FILE__ ) );
 define( 'WP_SERMON_MANAGER_PATH',    dirname( __FILE__ ) . '/' );
 define( 'WP_SERMON_MANAGER_INC',     WP_SERMON_MANAGER_PATH . 'includes/' );
 
-require_once( WP_SERMON_MANAGER_INC . 'Plugin.php' );
-require_once( WP_SERMON_MANAGER_INC . 'Admin/UserRoles.php' );
-require_once( WP_SERMON_MANAGER_INC . 'Admin/Settings.php' );
-require_once( WP_SERMON_MANAGER_INC . 'Filters/Fields/SermonTitle.php' );
-require_once( WP_SERMON_MANAGER_INC . 'PostTypes/Sermons.php' );
-require_once( WP_SERMON_MANAGER_INC . 'Taxonomies/Books.php' );
-require_once( WP_SERMON_MANAGER_INC . 'Taxonomies/Series.php' );
-require_once( WP_SERMON_MANAGER_INC . 'Taxonomies/Speakers.php' );
-require_once( WP_SERMON_MANAGER_INC . 'Taxonomies/Topics.php' );
-require_once( WP_SERMON_MANAGER_INC . 'TemplateTags.php' );
+if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
+	require_once __DIR__ . '/vendor/autoload.php';
+}
 
 /**
  * Initializes the plugin.
- *
- * @return void
  */
 function initialize() {
 	$plugin = new Plugin();
@@ -70,3 +61,11 @@ function initialize() {
 	do_action( 'wpsm_loaded', $plugin );
 }
 add_action( 'after_setup_theme', 'WPSermonManager\initialize', 20 );
+
+/**
+ * Function to run at plugin activation.
+ */
+function activate() {
+	flush_rewrite_rules();
+}
+register_activation_hook( __FILE__, 'WPSermonManager\activate' );
