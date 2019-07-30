@@ -1,0 +1,1 @@
+{"version":3,"sources":["admin/menus/menu-icon-wpsm_sermon.css"],"names":[],"mappings":"AAAA,2BACC,WAAe,AAAf,eAAe,AACf,YAAe,AAAf,cAAe,CAChB","file":"admin.min.css","sourcesContent":[".menu-icon-wpsm_sermon img {\n\twidth: .6875rem;\n\theight: 1.25rem;\n}\n"]}

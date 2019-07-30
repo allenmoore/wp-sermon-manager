@@ -1,0 +1,51 @@
+{
+  "name": "allenmoore/wp-sermon-manager",
+  "description": "WP Sermon Manager makes it easy for churches to easily publish sermons online.",
+  "version": "1.0.0",
+  "type": "wordpress-plugin",
+  "keywords": [
+    "wordpress",
+    "wordpress plugin",
+    "wordpress sermon plugin",
+    "wordpress sermon manager plugin",
+    "wp plugin",
+    "wp sermon plugin",
+    "wp sermon manager plugin",
+    "sermon",
+    "sermon manager"
+  ],
+  "homepage": "https://github.com/allenmoore/wp-sermon-manager",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Allen Moore",
+      "email": "am@allenmoore.co",
+      "homepage": "https://allenmoore.co",
+      "role": "Developer"
+    }
+  ],
+  "support": {
+    "email": "am@allenmoore.co",
+    "issues": "https://github.com/allenmoore/wp-sermon-manager/issues",
+    "source": "https://github.com/allenmoore/wp-sermon-manager",
+    "docs": "https://github.com/allenmoore/wp-sermon-manager#readme"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "autoload": {
+    "psr-4": {
+      "WPSermonManager\\": "./includes/"
+    },
+    "files": [
+      "includes/TemplateTags.php"
+    ]
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "require": {
+    "ext-calendar": "*"
+  }
+}
