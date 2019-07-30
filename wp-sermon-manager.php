@@ -37,6 +37,13 @@ namespace WPSermonManager;
 
 use WPSermonManager\Plugin;
 
+use WPSermonManager\Modules\SermonsApp;
+use WPSermonManager\Modules\Menu;
+use WPSermonManager\Modules\PostTypes\Sermon as SermonPostType;
+use WPSermonManager\Modules\Taxonomies\Books as BooksTaxonomy;
+
+if ( ! defined( 'WPINC' ) )  die;
+
 // Useful global constants.
 define( 'WP_SERMON_MANAGER_VERSION', '1.0.2' );
 define( 'WP_SERMON_MANAGER_URL',     plugin_dir_url( __FILE__ ) );
@@ -53,12 +60,31 @@ if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
 function initialize() {
 	$plugin = new Plugin();
 
+	add_action( 'init', [ $plugin, 'setup' ] );
+
 	/**
 	 * Allow other plugins to hook in and extend the plugin class
 	 *
 	 * @param Plugin $plugin
 	 */
 	do_action( 'wpsm_loaded', $plugin );
+
+	$menu           = new Menu();
+	$sermon         = new SermonPostType( $menu );
+	$sermonsApp     = new SermonsApp();
+	$sermonsApp->setPlugin( $plugin );
+	$plugin
+		->registerModule( $menu )
+		->registerModule( $sermon )
+		->registerModule( new BooksTaxonomy( $menu ) )
+		->registerModule( $sermonsApp );
+
+	/**
+	 * Allow other plugins to hook in and extend the plugin class
+	 *
+	 * @param Plugin $plugin
+	 */
+	do_action( 'glp_lcm_loaded', $plugin );
 }
 add_action( 'after_setup_theme', 'WPSermonManager\initialize', 20 );
 

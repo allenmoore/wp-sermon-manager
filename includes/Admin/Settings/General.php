@@ -4,26 +4,26 @@
  *
  * @package WPSermonManager\Admin
  */
-namespace WPSermonManager\Admin;
+namespace WPSermonManager\Admin\Settings;
 
 /**
- * The Settings Class.
+ * The General Class.
  *
  * Handles displaying the settings page and saving data.
  *
  * @since 1.0.0
  */
-class Settings {
+class General {
 
 	/**
-	 * The Settings constructor.
+	 * The General constructor.
 	 */
 	public function __construct() {
 		add_action( 'admin_menu', array( $this, 'settings_menu' ), 60 );
 	}
 
 	/**
-	 * Method to add a Settings page as a submenu of the Sermons post type.
+	 * Method to add a General Settings page as a submenu of the Sermons post type.
 	 */
 	public function settings_menu() {
 
@@ -38,7 +38,7 @@ class Settings {
 	}
 
 	/**
-	 * Method to render the Sermon Settings page.
+	 * Method to render the General Settings page.
 	 */
 	public function settings_page() {
 		?>

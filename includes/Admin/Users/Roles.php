@@ -1,21 +1,23 @@
 <?php
 /**
- * UserRoles
+ * Roles
  *
- * @package WPSermonManager\Admin
+ * @package WPSermonManager\Admin\Users
  */
-namespace WPSermonManager\Admin;
+namespace WPSermonManager\Admin\Users;
 
 use WP_Role;
 
+if ( ! defined( 'WPINC' ) )  die;
+
 /**
- * The UserRoles Class.
+ * The Roles Class.
  *
  * Handles adding custom user roles for WPSM users.
  *
  * @since 1.0.0
  */
-class UserRoles {
+class Roles {
 
 	/**
 	 * The UserRoles Constructor.

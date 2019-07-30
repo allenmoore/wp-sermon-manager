@@ -2,9 +2,11 @@
 /**
  * Sermon Title.
  *
- * @package WPSermonManager\Filters\Fields
+ * @package WPSermonManager\Modules\Filters\Fields
  */
-namespace WPSermonManager\Filters\Fields;
+namespace WPSermonManager\Modules\Filters\Fields;
+
+if ( ! defined( 'WPINC' ) )  die;
 
 /**
  * The SermonTitle Class.
