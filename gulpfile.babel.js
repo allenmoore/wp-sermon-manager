@@ -29,6 +29,18 @@ gulp.task('css', gulp.series('postcss', (done) => {
 }));
 
 /**
+ * Gulp task to run all JavaScript processes in a sequential order.
+ *
+ * @param {string} 'css' - The task name.
+ * @param {function} cb - The pipe sequence that gulp should run.
+ *
+ * @returns {void}
+ */
+gulp.task('js', gulp.series('compile-admin-js', (done) => {
+  done();
+}));
+
+/**
  * Gulp task to compress all theme images.
  *
  * @param {string} 'imagemin' - The task name.
@@ -48,7 +60,7 @@ gulp.task('imagemin', gulp.series(['image'], (done) => {
  *
  * @returns {void}
  */
-gulp.task('minify', gulp.series(['cssnano'], (done) => {
+gulp.task('minify', gulp.series(['cssnano', 'uglify'], (done) => {
   done();
 }));
 
@@ -72,6 +84,6 @@ gulp.task('wppot', gulp.series(['translate'], (done) => {
  *
  * @returns {void}
  */
-gulp.task('default', gulp.series(['clean-files', 'css', 'imagemin', 'minify']));
+gulp.task('default', gulp.series(['clean-files', 'css', 'js', 'imagemin', 'minify']));
 
 release(gulp);

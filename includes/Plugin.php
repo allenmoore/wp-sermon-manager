@@ -2,18 +2,16 @@
 /**
  * Plugin
  *
- * @package WPSM/Plugin
+ * @package WPSermonManager
  */
 namespace WPSermonManager;
 
-use WPSermonManager\Admin\UserRoles;
-use WPSermonManager\Admin\Settings;
-use WPSermonManager\Filters\Fields\SermonTitle;
-use WPSermonManager\PostTypes\Sermons;
-use WPSermonManager\Taxonomies\Books;
-use WPSermonManager\Taxonomies\Series;
-use WPSermonManager\Taxonomies\Speakers;
-use WPSermonManager\Taxonomies\Topics;
+use WPSermonManager\Modules\ModuleInterface;
+use WPSermonManager\Modules\PostTypes\PostTypeInterface;
+use WPSermonManager\Modules\Taxonomies\TaxonomyInterface;
+use WPSermonManager\Util\HasPluginInterface;
+
+if ( ! defined( 'WPINC' ) )  die;
 
 /**
  * The Plugin Class.
@@ -22,123 +20,181 @@ use WPSermonManager\Taxonomies\Topics;
  *
  * @since 1.0.0
  */
-class Plugin {
+class Plugin implements PluginInterface {
+
+	/** @var ModuleInterface[] */
+	private $modules = [ ];
+
+	/** @var PostTypeInterface[] */
+	private $postTypes = [ ];
+
+	/** @var TaxonomyInterface[] */
+	private $taxonomies = [ ];
+
+	/** @var MenuInterface[] */
+	private $menus = [ ];
 
 	/**
-	 * Property representing an instance of the UserRoles class.
-	 *
-	 * @access public
-	 * @var \WPSermonManager\Admin\UserRoles
+	 * Method to setup the plugin's main functionality
 	 */
-	public $user_roles;
+	public function setup() {
 
-	/**
-	 * Property representing an instance of the Settings class.
-	 *
-	 * @access public
-	 * @var \WPSermonManager\Admin\Settings
-	 */
-	public $settings;
+		$this->setupL10n();
 
-	/**
-	 * Property representing an instance of the SermonTitle class.
-	 *
-	 * @access public
-	 * @var \WPSermonManager\Filters\Fields\SermonTitle
-	 */
-	public $sermon_title_filter;
-
-	/**
-	 * Property representing an instance of the Sermons class.
-	 *
-	 * @access public
-	 * @var \WPSermonManager\PostTypes\Sermons
-	 */
-	public $sermons_cpt;
-
-	/**
-	 * Property representing an instance of the Books class.
-	 *
-	 * @access public
-	 * @var \WPSermonManager\Taxonomies\Books
-	 */
-	public $books_tax;
-
-	/**
-	 * Property representing an instance of the Series class.
-	 *
-	 * @access public
-	 * @var \WPSermonManager\Taxonomies\Series
-	 */
-	public $series_tax;
-
-	/**
-	 * Property representing an instance of the Speakers class.
-	 *
-	 * @access public
-	 * @var \WPSermonManager\Taxonomies\Speakers
-	 */
-	public $speakers_tax;
-
-	/**
-	 * Property representing an instance of the Topics class.
-	 *
-	 * @access public
-	 * @var \WPSermonManager\Taxonomies\Topics
-	 */
-	public $topics_tax;
-
-	/**
-	 * The Plugin constructor.
-	 */
-	public function __construct() {
-		$this->user_roles = new UserRoles();
-		$this->settings = new Settings();
-		$this->sermon_title_filter = new SermonTitle();
-		$this->sermons_cpt = new Sermons();
-		$this->speakers_tax = new Speakers();
-		$this->series_tax = new Series();
-		$this->topics_tax = new Topics();
-		$this->books_tax = new Books();
-
-		add_action( 'admin_enqueue_scripts', array( $this, 'enquque_admin_styles' ) );
-		add_action( 'init', array( $this, 'i18n' ) );
-		add_action( 'init', array( $this, 'init' ) );
+		/**
+		 * Initialize the plugin
+		 *
+		 * @param Plugin $this
+		 */
+		do_action( 'wp_sermon_manager_init', $this );
 	}
 
 	/**
-	 * Method that enqueues admin styles.
+	 * Method to register a module with the plugin
+	 *
+	 * @param ModuleInterface $module
+	 *
+	 * @return $this
 	 */
-	public function enquque_admin_styles() {
+	public function registerModule( ModuleInterface $module ) {
 
-		$min = defined( 'SCRIPT_DEBUG' ) && filter_var( SCRIPT_DEBUG, FILTER_VALIDATE_BOOLEAN ) ? '' : '.min';
-		$plugin_url = trailingslashit( WP_SERMON_MANAGER_URL );
+		$this->modules[ $module->getModuleSlug() ] = $module;
 
-		wp_register_style(
-			'wpsm_admin_css',
-			esc_url( $plugin_url . '/dist/css/admin' . $min . '.css' ),
-			false,
-			'1.0.0'
-		);
+		if ( $module instanceof HasPluginInterface ) {
+			$module->setPlugin( $this );
+		}
 
-		wp_enqueue_style( 'wpsm_admin_css' );
+		$module->setupModule( $this );
+
+		if ( $module instanceof PostTypeInterface ) {
+			$this->registerPostType( $module );
+		}
+
+		if ( $module instanceof TaxonomyInterface ) {
+			$this->registerTaxonomy( $module );
+		}
+
+		if ( $module instanceof MenuInterface ) {
+			$this->registerMenu( $module );
+		}
+
+		return $this;
 	}
 
 	/**
-	 * Method that initializes the plugin and fires an action other plugins can hook into.
+	 * Method to register a post type object
 	 *
-	 * @return void
+	 * @param PostTypeInterface $postType
+	 *
+	 * @return $this
 	 */
-	public function init() {
-		do_action( 'wpsm_init' );
+	public function registerPostType( PostTypeInterface $postType ) {
+
+		$postTypeSlug = $postType->getPostTypeSlug();
+
+		if ( $postTypeSlug ) {
+			$this->postTypes[ $postTypeSlug ] = $postType;
+		}
+
+		return $this;
 	}
 
 	/**
-	 * Method that sets up the text domain.
+	 * Method to get a post type object
 	 *
-	 * @return void
+	 * @param string $name
+	 *
+	 * @return PostTypeInterface|null
 	 */
-	public function i18n() {
+	public function getPostType( $name ) {
+		return isset( $this->postTypes[ $name ] ) ? $this->postTypes[ $name ] : null;
+	}
+
+	/**
+	 * Method to register a taxonomy object
+	 *
+	 * @param TaxonomyInterface $taxonomy
+	 *
+	 * @return $this
+	 */
+	public function registerTaxonomy( TaxonomyInterface $taxonomy ) {
+
+		$taxonomySlug = $taxonomy->getTaxonomySlug();
+
+		if ( $taxonomySlug ) {
+			$this->taxonomies[ $taxonomySlug ] = $taxonomy;
+		}
+
+		return $this;
+	}
+
+	/**
+	 * Method to get a taxonomy object
+	 *
+	 * @param string $name
+	 *
+	 * @return TaxonomyInterface|null
+	 */
+	public function getTaxonomy( $name ) {
+		return isset( $this->taxonomies[ $name ] ) ? $this->taxonomies[ $name ] : null;
+	}
+
+	/**
+	 * Method to get a menu object
+	 *
+	 * By default it will return the first available menu
+	 *
+	 * @param string $slug
+	 *
+	 * @return MenuInterface|null
+	 */
+	public function getMenu( $slug = '' ) {
+
+		if ( ! $slug ) {
+			return reset( $this->menus ) ?: null;
+		}
+
+		return isset( $this->menus[ $slug ] ) ? $this->menus[ $slug ] : null;
+	}
+
+	/**
+	 * Method to add another menu
+	 *
+	 * @param MenuInterface $menu
+	 *
+	 * @return $this
+	 */
+	public function registerMenu( MenuInterface $menu ) {
+
+		$this->menus[ $menu->getMenuSlug() ] = $menu;
+
+		return $this;
+	}
+
+	/**
+	 * Method to render a template
+	 *
+	 * @param string $__template_file
+	 * @param array $__template_data
+	 * @param boolean $__admin_tmpl
+	 */
+	public function template( $__template_file, array $__template_data = [ ], bool $__admin_tmpl = false ) {
+
+		$tmpl_dir = trailingslashit( ( true === $__admin_tmpl ? 'includes/Admin/Templates' : 'templates' ) );
+
+		$__template_file = apply_filters( 'wpsm-template', WP_SERMON_MANAGER_PATH . $tmpl_dir . '$__template_file.php', $__template_file, $__template_data );
+
+		if ( $__template_file && file_exists( $__template_file ) ) {
+			extract( $__template_data, EXTR_SKIP );
+			require $__template_file;
+		}
+	}
+
+	/**
+	 * Method to set up the text domain
+	 */
+	public function setupL10n() {
+
 		$locale = apply_filters( 'plugin_locale', get_locale(), 'wp-sermon-manager' );
 		load_textdomain( 'wp-sermon-manager', WP_LANG_DIR . '/wp-sermon-manager/wp-sermon-manager-' . $locale . '.mo' );
 		load_plugin_textdomain( 'wp-sermon-manager', false, plugin_basename( WP_SERMON_MANAGER_PATH ) . '/languages/' );
