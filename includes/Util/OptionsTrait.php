@@ -17,8 +17,10 @@ trait OptionsTrait {
 
 	/** @var bool */
 	private $optionsInitialized = false;
+
 	/** @var array */
 	private $optionsData;
+
 	/** @var array */
 	protected $defaultOptionsData = [ ];
 

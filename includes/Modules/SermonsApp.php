@@ -7,6 +7,7 @@
 namespace WPSermonManager\Modules;
 
 use WPSermonManager\Modules\ActivitiesApp\TypeInterface;
+use WPSermonManager\Modules\Taxonomies\Meta\SpeakerImage as SpeakerImageMeta;
 use WPSermonManager\PluginInterface;
 use WPSermonManager\Util\HasPluginTrait;
 
@@ -26,6 +27,8 @@ class SermonsApp implements ModuleInterface {
 
 	/** @var TypeInterface[] */
 	private $types = [ ];
+
+	public $speakerImageMeta;
 
 	/**
 	 * Method to get this module's slug
@@ -48,6 +51,8 @@ class SermonsApp implements ModuleInterface {
 	public function setupModule( PluginInterface $plugin ) {
 		add_action( 'wp_sermon_manager_init', [ $this, 'registerDefaultTypes' ] );
 		add_action( 'wp_loaded', [ $this, 'registerAssets' ] );
+
+		$this->speakerImageMeta = new SpeakerImageMeta();
 	}
 
 	/**
@@ -69,7 +74,7 @@ class SermonsApp implements ModuleInterface {
 
 		wp_register_style(
 			'wpsm-admin-css',
-			esc_url( $pluginUrl . '/dist/css/admin' . $min . '.css' ),
+			esc_url( $pluginUrl . 'dist/css/admin' . $min . '.css' ),
 			false,
 			'1.0.0'
 		);

@@ -82,7 +82,7 @@ class Speakers implements TaxonomyInterface, ModuleInterface {
 				'search_items'               => esc_html__( 'Search Speakers', 'wp-sermon-manager' ),
 				'popular_items'              => esc_html__( 'Popular Speakers', 'wp-sermon-manager' ),
 				'all_items'                  => esc_html__( 'All Speakers', 'wp-sermon-manager' ),
-				'edit_item'                  => esc_html__( 'Edit Speakes', 'wp-sermon-manager' ),
+				'edit_item'                  => esc_html__( 'Edit Speakers', 'wp-sermon-manager' ),
 				'view_item'                  => esc_html__( 'View Speaker', 'wp-sermon-manager' ),
 				'update_item'                => esc_html__( 'Update Speaker', 'wp-sermon-manager' ),
 				'add_new_item'               => esc_html__( 'Add New Speaker', 'wp-sermon-manager' ),

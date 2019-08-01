@@ -55,6 +55,7 @@ trait TaxonomyTrait {
 	 * @return $this
 	 */
 	public function registerTaxonomyMeta( MetaInterface $meta ) {
+
 		$this->registeredMeta[ $meta->getMetaKey() ] = $meta;
 
 		return $this;

@@ -48,7 +48,7 @@ use WPSermonManager\Modules\Taxonomies\Topics as TopicsTaxonomy;
 if ( ! defined( 'WPINC' ) )  die;
 
 // Useful global constants.
-define( 'WP_SERMON_MANAGER_VERSION', '1.0.2' );
+define( 'WP_SERMON_MANAGER_VERSION', '1.0.0' );
 define( 'WP_SERMON_MANAGER_URL',     plugin_dir_url( __FILE__ ) );
 define( 'WP_SERMON_MANAGER_PATH',    dirname( __FILE__ ) . '/' );
 define( 'WP_SERMON_MANAGER_INC',     WP_SERMON_MANAGER_PATH . 'includes/' );

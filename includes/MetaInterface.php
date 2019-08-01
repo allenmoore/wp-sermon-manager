@@ -16,7 +16,7 @@ namespace WPSermonManage;
 interface MetaInterface {
 
 	/**
-	 * Method to getthe meta key for this meta
+	 * Method to get the meta key for this meta
 	 *
 	 * @return string
 	 */
@@ -30,7 +30,7 @@ interface MetaInterface {
 	public function setupMetaObject();
 
 	/**
-	 * Method to getthe meta value for this meta object
+	 * Method to get the meta value for this meta object
 	 *
 	 * @param int $objectId
 	 * @param mixed $default
