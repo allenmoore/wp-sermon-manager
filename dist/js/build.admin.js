@@ -31,8 +31,8 @@ function () {
   function MediaUploader() {
     _classCallCheck(this, MediaUploader);
 
-    this.uploadField = document.getElementById('wpsm-upload-id');
-    this.uploadThumb = document.getElementById('wpsm-upload-wrapper');
+    this.uploadField = document.getElementById(wpsmImgUploader.key);
+    this.uploadThumb = document.getElementById('wpsm-image-wrapper');
     this.uploads = [];
     this.insertObject = this.insertObject.bind(this);
     this.deleteObject = this.deleteObject.bind(this);
