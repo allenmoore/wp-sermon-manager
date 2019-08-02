@@ -6,6 +6,8 @@
  */
 namespace WPSermonManager\Modules\Taxonomies\Meta;
 
+use function WPSermonManager\template;
+
 /**
  * The SpeakerImage Class.
  *
@@ -13,14 +15,19 @@ namespace WPSermonManager\Modules\Taxonomies\Meta;
  */
 class SpeakerImage {
 
+	/** @var string */
+	const TAX_NAME = 'wpsm-sermon-speaker';
+
+	const TERM_NAME = 'wpsm-speaker-image-id';
+
 	/**
 	 * The SpeakerImage Constructor
 	 */
 	public function __construct() {
-		add_action( 'wpsm-sermon-speaker_add_form_fields', array ( $this, 'uploadImage' ), 10 );
-		add_action( 'created_wpsm-sermon-speaker', array ( $this, 'saveImage' ), 10, 2 );
-		add_action( 'wpsm-sermon-speaker_edit_form_fields', array ( $this, 'updateImage' ), 10, 2 );
-		add_action( 'edited_wpsm-sermon-speaker', array ( $this, 'updatedImage' ), 10, 2 );
+		add_action( static::TAX_NAME . '_add_form_fields', array ( $this, 'uploadImage' ), 10 );
+		add_action( 'created_' . static::TAX_NAME, array ( $this, 'saveImage' ), 10, 2 );
+		add_action( static::TAX_NAME . '_edit_form_fields', array ( $this, 'updateImage' ), 10, 2 );
+		add_action( 'edited_' . static::TAX_NAME, array ( $this, 'updatedImage' ), 10, 2 );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enququeAdminScripts' ) );
 	}
 
@@ -28,9 +35,16 @@ class SpeakerImage {
 	 * Method to enqueue JavaScript for the Admin Dashoard
 	 */
 	public function enququeAdminScripts() {
+		global $current_screen;
+
+		if ( 'wpsm-sermon' !== $current_screen->post_type ) return;
 
 		$min = defined( 'SCRIPT_DEBUG' ) && filter_var( SCRIPT_DEBUG, FILTER_VALIDATE_BOOLEAN ) ? '' : '.min';
 		$pluginUrl = trailingslashit( WP_SERMON_MANAGER_URL );
+
+		$data = array(
+			'key' => static::TERM_NAME,
+		);
 
 		wp_enqueue_media();
 
@@ -41,6 +55,12 @@ class SpeakerImage {
 			WP_SERMON_MANAGER_VERSION,
 			true
 		);
+
+		wp_localize_script(
+			'wpsm-admin-uploader',
+			'wpsmImgUploader',
+			$data
+		);
 	}
 
 	/**
@@ -50,17 +70,12 @@ class SpeakerImage {
 	 */
 	public function uploadImage( $tax ) {
 
-		?>
-		<div class="form-field term-group">
-			<label for="wpsm-upload-id"><?php esc_html_e('Image', 'wp-sermon-manager'); ?></label>
-			<input type="hidden" id="wpsm-upload-id" name="wpsm-upload-id" class="custom_media_url" value="">
-			<div id="wpsm-upload-wrapper"></div>
-			<div>
-				<button id="wpsm-add-button" class="button button-secondary" aria-pressed="false"><?php esc_html_e( 'Add Image', 'wp-sermon-manager' ); ?></button>
-				<button id="wpsm-delete-button" class="button button-secondary" aria-pressed="false"><?php esc_html_e( 'Delete Image', 'wp-sermon-manager' ); ?></button>
-			</div>
-		</div>
-		<?php
+		$imageId = get_term_meta( $term->term_id, static::TERM_NAME, true );
+
+		template( 'admin/taxonomy-meta/image-upload', array(
+			'name'    => static::TERM_NAME,
+			'imageId' => $imageId,
+		) );
 	}
 
 	/**
@@ -71,9 +86,9 @@ class SpeakerImage {
 	 */
 	public function saveImage( $termId, $ttId ) {
 
-		if ( isset( $_POST['wpsm-upload-id'] ) && '' !== $_POST['wpsm-upload-id'] ) {
-			$upload = $_POST['wpsm-upload-id'];
-			add_term_meta( $termId, 'wpsm-upload-id', $upload, true );
+		if ( isset( $_POST[static::TERM_NAME] ) && '' !== $_POST[static::TERM_NAME] ) {
+			$upload = $_POST[static::TERM_NAME];
+			add_term_meta( $termId, static::TERM_NAME, $upload, true );
 		}
 	}
 
@@ -84,26 +99,13 @@ class SpeakerImage {
 	 * @param string $taxonomy The current taxonomy slug.
 	 */
 	public function updateImage( $term, $taxonomy ) {
-		?>
-		<tr class="form-field term-group-wrap">
-			<th scope="row">
-				<label for="wpsm-upload-id"><?php esc_html_e( 'Image', 'wp-sermon-manager' ); ?></label>
-			</th>
-			<td>
-				<?php $uploadId = get_term_meta( $term->term_id, 'wpsm-upload-id', true ); ?>
-				<input type="hidden" id="wpsm-upload-id" name="wpsm-upload-id" value="<?php echo $uploadId; ?>">
-				<div id="wpsm-upload-wrapper">
-					<?php if ( $uploadId ) { ?>
-						<?php echo wp_get_attachment_image( $uploadId, 'thumbnail' ); ?>
-					<?php } ?>
-				</div>
-				<div>
-					<button id="wpsm-add-button" class="button button-secondary" aria-pressed="false"><?php esc_html_e( 'Add Image', 'wp-sermon-manager' ); ?></button>
-					<button id="wpsm-delete-button" class="button button-secondary" aria-pressed="false"><?php esc_html_e( 'Delete Image', 'wp-sermon-manager' ); ?></button>
-				</div>
-			</td>
-		</tr>
-		<?php
+
+		$imageId = get_term_meta( $term->term_id, static::TERM_NAME, true );
+
+		template( 'admin/taxonomy-meta/image-update', array(
+			'name'    => static::TERM_NAME,
+			'imageId' => $imageId,
+		) );
 	}
 
 	/**
@@ -114,11 +116,11 @@ class SpeakerImage {
 	 */
 	public function updatedImage( $termId, $ttId ) {
 
-		if ( isset( $_POST['wpsm-upload-id'] ) && '' !== $_POST['wpsm-upload-id'] ) {
-			$upload = $_POST['wpsm-upload-id'];
-			update_term_meta ( $termId, 'wpsm-upload-id', $upload );
+		if ( isset( $_POST[static::TERM_NAME] ) && '' !== $_POST[static::TERM_NAME] ) {
+			$upload = $_POST[static::TERM_NAME];
+			update_term_meta ( $termId, static::TERM_NAME, $upload );
 		} else {
-			update_term_meta ( $termId, 'wpsm-upload-id', '' );
+			update_term_meta ( $termId, static::TERM_NAME, '' );
 		}
 	}
 }
