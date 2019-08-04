@@ -2,15 +2,15 @@
 /**
  * Series
  *
- * @package WPSermonManager\Modules\Taxonomies
+ * @package WPSM\Modules\Taxonomies
  */
-namespace WPSermonManager\Modules\Taxonomies;
+namespace WPSM\Modules\Taxonomies;
 
-use WPSermonManager\MenuInterface;
-use WPSermonManager\MetaInterface;
-use WPSermonManager\Modules\ModuleInterface;
-use WPSermonManager\PluginInterface;
-use WPSermonManager\Util\HasPluginTrait;
+use WPSM\MenuInterface;
+use WPSM\MetaInterface;
+use WPSM\Modules\ModuleInterface;
+use WPSM\PluginInterface;
+use WPSM\Util\HasPluginTrait;
 
 if ( ! defined( 'WPINC' ) ) {
 	die;
@@ -59,7 +59,7 @@ class Series implements TaxonomyInterface, ModuleInterface {
 	 */
 	public function setupModule( PluginInterface $plugin ) {
 		$this->setPlugin( $plugin );
-		add_action( 'wp_sermon_manager_init', [$this, 'registerTaxonomy'], 15 );
+		add_action( 'wpsm_init', [$this, 'registerTaxonomy'], 15 );
 	}
 
 	/**
@@ -78,23 +78,23 @@ class Series implements TaxonomyInterface, ModuleInterface {
 		register_taxonomy( $this->getTaxonomySlug(),
 			$this->getPlugin()->getPostType( 'wpsm-sermon' )->getPostTypeSlug(), [
 				'labels'            => [
-					'name'                       => esc_html_x( 'Series', 'taxonomy general name', 'wp-sermon-manager' ),
-					'singular_name'              => esc_html_x( 'Series', 'taxonomy singular name', 'wp-sermon-manager' ),
-					'search_items'               => esc_html__( 'Search Series', 'wp-sermon-manager' ),
-					'popular_items'              => esc_html__( 'Popular Series', 'wp-sermon-manager' ),
-					'all_items'                  => esc_html__( 'All Series', 'wp-sermon-manager' ),
-					'edit_item'                  => esc_html__( 'Edit Series', 'wp-sermon-manager' ),
-					'view_item'                  => esc_html__( 'View Series', 'wp-sermon-manager' ),
-					'update_item'                => esc_html__( 'Update Series', 'wp-sermon-manager' ),
-					'add_new_item'               => esc_html__( 'Add New Series', 'wp-sermon-manager' ),
-					'new_item_name'              => esc_html__( 'New Series Name', 'wp-sermon-manager' ),
-					'separate_items_with_commas' => esc_html__( 'Separate series with commas', 'wp-sermon-manager' ),
-					'add_or_remove_items'        => esc_html__( 'Add or remove series', 'wp-sermon-manager' ),
-					'choose_from_most_used'      => esc_html__( 'Choose from the most used series', 'wp-sermon-manager' ),
-					'not_found'                  => esc_html__( 'No series found.', 'wp-sermon-manager' ),
-					'no_terms'                   => esc_html__( 'No series', 'wp-sermon-manager' ),
-					'items_list_navigation'      => esc_html__( 'Series list navigation', 'wp-sermon-manager' ),
-					'items_list'                 => esc_html__( 'Series list', 'wp-sermon-manager' ),
+					'name'                       => esc_html_x( 'Series', 'taxonomy general name', 'wpsm' ),
+					'singular_name'              => esc_html_x( 'Series', 'taxonomy singular name', 'wpsm' ),
+					'search_items'               => esc_html__( 'Search Series', 'wpsm' ),
+					'popular_items'              => esc_html__( 'Popular Series', 'wpsm' ),
+					'all_items'                  => esc_html__( 'All Series', 'wpsm' ),
+					'edit_item'                  => esc_html__( 'Edit Series', 'wpsm' ),
+					'view_item'                  => esc_html__( 'View Series', 'wpsm' ),
+					'update_item'                => esc_html__( 'Update Series', 'wpsm' ),
+					'add_new_item'               => esc_html__( 'Add New Series', 'wpsm' ),
+					'new_item_name'              => esc_html__( 'New Series Name', 'wpsm' ),
+					'separate_items_with_commas' => esc_html__( 'Separate series with commas', 'wpsm' ),
+					'add_or_remove_items'        => esc_html__( 'Add or remove series', 'wpsm' ),
+					'choose_from_most_used'      => esc_html__( 'Choose from the most used series', 'wpsm' ),
+					'not_found'                  => esc_html__( 'No series found.', 'wpsm' ),
+					'no_terms'                   => esc_html__( 'No series', 'wpsm' ),
+					'items_list_navigation'      => esc_html__( 'Series list navigation', 'wpsm' ),
+					'items_list'                 => esc_html__( 'Series list', 'wpsm' ),
 				],
 				'public'            => true,
 				'hierarchical'      => false,

@@ -2,9 +2,9 @@
 /**
  * Taxonomy Meta Abstract
  *
- * @package WPSermonManager\Admin
+ * @package WPSM\Admin
  */
-namespace WPSermonManager\Admin;
+namespace WPSM\Admin;
 
 /**
  * The TaxonomyMetaAbstract Abstract Class.
@@ -62,7 +62,7 @@ abstract class TaxonomyMetaAbstract {
 		if ( 'wpsm-sermon' !== $current_screen->post_type ) return;
 
 		$min = defined( 'SCRIPT_DEBUG' ) && filter_var( SCRIPT_DEBUG, FILTER_VALIDATE_BOOLEAN ) ? '' : '.min';
-		$pluginUrl = trailingslashit( WP_SERMON_MANAGER_URL );
+		$pluginUrl = trailingslashit( WPSM_PLUGIN_URL );
 
 		wp_enqueue_media();
 
@@ -70,7 +70,7 @@ abstract class TaxonomyMetaAbstract {
 			'wpsm-admin-uploader',
 			esc_url( $pluginUrl . 'dist/js/build.admin' . $min . '.js' ),
 			[],
-			WP_SERMON_MANAGER_VERSION,
+			WPSM_VERSION,
 			true
 		);
 	}
@@ -85,12 +85,12 @@ abstract class TaxonomyMetaAbstract {
 		$termName = $this->getTermName();
 		?>
 		<div class="form-field term-group">
-			<label for="<?php echo esc_attr( $termName ); ?>"><?php esc_html_e('Image', 'wp-sermon-manager'); ?></label>
+			<label for="<?php echo esc_attr( $termName ); ?>"><?php esc_html_e('Image', 'wpsm'); ?></label>
 			<input type="hidden" id="<?php echo esc_attr( $termName ); ?>" name="<?php echo esc_attr( $termName ); ?>" class="custom_media_url" value="">
 			<div id="wpsm-upload-wrapper"></div>
 			<div>
-				<button id="wpsm-add-button" class="button button-secondary" aria-pressed="false"><?php esc_html_e( 'Add Image', 'wp-sermon-manager' ); ?></button>
-				<button id="wpsm-delete-button" class="button button-secondary" aria-pressed="false"><?php esc_html_e( 'Delete Image', 'wp-sermon-manager' ); ?></button>
+				<button id="wpsm-add-button" class="button button-secondary" aria-pressed="false"><?php esc_html_e( 'Add Image', 'wpsm' ); ?></button>
+				<button id="wpsm-delete-button" class="button button-secondary" aria-pressed="false"><?php esc_html_e( 'Delete Image', 'wpsm' ); ?></button>
 			</div>
 		</div>
 		<?php
@@ -124,7 +124,7 @@ abstract class TaxonomyMetaAbstract {
 		?>
 		<tr class="form-field term-group-wrap">
 			<th scope="row">
-				<label for="<?php echo esc_attr( $termName ); ?>"><?php esc_html_e( 'Image', 'wp-sermon-manager' ); ?></label>
+				<label for="<?php echo esc_attr( $termName ); ?>"><?php esc_html_e( 'Image', 'wpsm' ); ?></label>
 			</th>
 			<td>
 				<?php $uploadId = get_term_meta( $term->term_id, $termName, true ); ?>
@@ -135,8 +135,8 @@ abstract class TaxonomyMetaAbstract {
 					<?php } ?>
 				</div>
 				<div>
-					<button id="wpsm-add-button" class="button button-secondary" aria-pressed="false"><?php esc_html_e( 'Add Image', 'wp-sermon-manager' ); ?></button>
-					<button id="wpsm-delete-button" class="button button-secondary" aria-pressed="false"><?php esc_html_e( 'Delete Image', 'wp-sermon-manager' ); ?></button>
+					<button id="wpsm-add-button" class="button button-secondary" aria-pressed="false"><?php esc_html_e( 'Add Image', 'wpsm' ); ?></button>
+					<button id="wpsm-delete-button" class="button button-secondary" aria-pressed="false"><?php esc_html_e( 'Delete Image', 'wpsm' ); ?></button>
 				</div>
 			</td>
 		</tr>

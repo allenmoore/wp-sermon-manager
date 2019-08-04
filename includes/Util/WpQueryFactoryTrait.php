@@ -2,9 +2,9 @@
 /**
  * WP_Query Factory Trait
  *
- * @package WPSermonManager\Util
+ * @package WPSM\Util
  */
-namespace WPSermonManager\Util;
+namespace WPSM\Util;
 
 use WP_Query;
 

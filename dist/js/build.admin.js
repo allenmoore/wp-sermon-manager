@@ -16,6 +16,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
+var _utils = require("../../utils");
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -40,69 +42,15 @@ function () {
     this.handleEvents = this.handleEvents.bind(this);
   }
   /**
-   * Method to get the value of a field object.
+   * Method to set the metadata of an object.
    *
-   * @param {Object} obj - The field object.
+   * @param {Object} obj - The object.
    *
-   * @returns {string} - The field object's value.
+   * @returns {Array} - An array of object metadata.
    */
 
 
   _createClass(MediaUploader, [{
-    key: "getValue",
-    value: function getValue(obj) {
-      return obj.value;
-    }
-    /**
-     * Method to get an object's length.
-     *
-     * @param {Object} obj - The object.
-     *
-     * @returns {*} - The object's length.
-     */
-
-  }, {
-    key: "getLength",
-    value: function getLength(obj) {
-      return obj.length;
-    }
-    /**
-     * Method to get an object's models.
-     *
-     * @param {Object} obj - The object.
-     *
-     * @returns {*|[]} - The object's models.
-     */
-
-  }, {
-    key: "getModels",
-    value: function getModels(obj) {
-      return obj.models;
-    }
-    /**
-     * Method to set the value of a field object.
-     *
-     * @param {Object} obj - The field object.
-     * @param {string} val - The value to set.
-     *
-     * @returns {string} - The field object's new value.
-     */
-
-  }, {
-    key: "setValue",
-    value: function setValue(obj, val) {
-      obj.value = val;
-      return obj.value;
-    }
-    /**
-     * Method to set the metadata of an object.
-     *
-     * @param {Object} obj - The object.
-     *
-     * @returns {Array} - An array of object metadata.
-     */
-
-  }, {
     key: "setMetaData",
     value: function setMetaData(obj) {
       var metaData;
@@ -126,8 +74,8 @@ function () {
     key: "insertObject",
     value: function insertObject(frame) {
       var selection = frame.state().get('selection'),
-          length = this.getLength(selection),
-          objects = this.getModels(selection),
+          length = selection.length,
+          objects = selection.models,
           imgEl = document.createElement('img');
       var object,
           objectData = {};
@@ -152,11 +100,11 @@ function () {
   }, {
     key: "deleteObject",
     value: function deleteObject(e) {
-      var objectId = this.getFieldValue(this.uploadField);
-      e.preventDefault();
+      var objectId = this.uploadField.value;
       this.uploads.splice(this.uploads.indexOf(objectId), 1);
       this.uploadField.value = '';
       this.uploadThumb.remove();
+      e.preventDefault();
     }
     /**
      * Methos to trigger the WP Media Upload modal.
@@ -204,7 +152,7 @@ function () {
       deleteButton.onclick = this.deleteObject;
     }
     /**
-     * Method to initialize the Media Uploader.
+     * Method to initilize the event listeners.
      *
      * @returns {void}
      */
@@ -221,6 +169,66 @@ function () {
 
 var _default = MediaUploader;
 exports.default = _default;
+
+},{"../../utils":3}],3:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.getValue = getValue;
+exports.getLength = getLength;
+exports.getModels = getModels;
+exports.setValue = setValue;
+
+/**
+ * Function to get the value of a field object.
+ *
+ * @param {Object} obj - The field object.
+ *
+ * @returns {string} - The field object's value.
+ */
+function getValue(obj) {
+  return obj.value;
+}
+/**
+ * Function to get an object's length.
+ *
+ * @param {Object} obj - The object.
+ *
+ * @returns {*} - The object's length.
+ */
+
+
+function getLength(obj) {
+  return obj.length;
+}
+/**
+ * Function to get an object's models.
+ *
+ * @param {Object} obj - The object.
+ *
+ * @returns {*|[]} - The object's models.
+ */
+
+
+function getModels(obj) {
+  return obj.models;
+}
+/**
+ * Function to set the value of a field object.
+ *
+ * @param {Object} obj - The field object.
+ * @param {string} val - The value to set.
+ *
+ * @returns {string} - The field object's new value.
+ */
+
+
+function setValue(obj, val) {
+  obj.value = val;
+  return obj.value;
+}
 
 },{}]},{},[1]);
 

@@ -2,11 +2,11 @@
 /**
  * Plugin Trait Validation
  *
- * @package WPSermonManager\Util
+ * @package WPSM\Util
  */
-namespace WPSermonManager\Util;
+namespace WPSM\Util;
 
-use WPSermonManager\PluginInterface;
+use WPSM\PluginInterface;
 
 /**
  * HasPluginTrait

@@ -1,3 +1,5 @@
+import { utils } from '../../utils';
+
 class MediaUploader {
 
   /**
@@ -12,54 +14,6 @@ class MediaUploader {
     this.deleteObject = this.deleteObject.bind(this);
     this.openModal = this.openModal.bind(this);
     this.handleEvents = this.handleEvents.bind(this);
-  }
-
-  /**
-   * Method to get the value of a field object.
-   *
-   * @param {Object} obj - The field object.
-   *
-   * @returns {string} - The field object's value.
-   */
-  getValue(obj) {
-    return obj.value;
-  }
-
-  /**
-   * Method to get an object's length.
-   *
-   * @param {Object} obj - The object.
-   *
-   * @returns {*} - The object's length.
-   */
-  getLength(obj) {
-    return obj.length;
-  }
-
-  /**
-   * Method to get an object's models.
-   *
-   * @param {Object} obj - The object.
-   *
-   * @returns {*|[]} - The object's models.
-   */
-  getModels(obj) {
-    return obj.models;
-  }
-
-  /**
-   * Method to set the value of a field object.
-   *
-   * @param {Object} obj - The field object.
-   * @param {string} val - The value to set.
-   *
-   * @returns {string} - The field object's new value.
-   */
-  setValue(obj, val) {
-
-    obj.value = val;
-
-    return obj.value;
   }
 
   /**
@@ -91,8 +45,8 @@ class MediaUploader {
    */
   insertObject(frame) {
     const selection = frame.state().get('selection'),
-      length = this.getLength(selection),
-      objects = this.getModels(selection),
+      length = selection.length,
+      objects = selection.models,
       imgEl = document.createElement('img');
     let object,
       objectData = {};
@@ -115,13 +69,12 @@ class MediaUploader {
    * @returns {void}
    */
   deleteObject(e) {
-    let objectId = this.getFieldValue(this.uploadField);
-
-    e.preventDefault();
+    let objectId = this.uploadField.value;
 
     this.uploads.splice(this.uploads.indexOf(objectId), 1);
     this.uploadField.value = '';
     this.uploadThumb.remove();
+    e.preventDefault();
   }
 
   /**
@@ -162,7 +115,7 @@ class MediaUploader {
   }
 
   /**
-   * Method to initialize the Media Uploader.
+   * Method to initilize the event listeners.
    *
    * @returns {void}
    */

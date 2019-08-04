@@ -2,14 +2,14 @@
 /**
  * Plugin
  *
- * @package WPSermonManager
+ * @package WPSM
  */
-namespace WPSermonManager;
+namespace WPSM;
 
-use WPSermonManager\Modules\ModuleInterface;
-use WPSermonManager\Modules\PostTypes\PostTypeInterface;
-use WPSermonManager\Modules\Taxonomies\TaxonomyInterface;
-use WPSermonManager\Util\HasPluginInterface;
+use WPSM\Modules\ModuleInterface;
+use WPSM\Modules\PostTypes\PostTypeInterface;
+use WPSM\Modules\Taxonomies\TaxonomyInterface;
+use WPSM\Util\HasPluginInterface;
 
 if ( ! defined( 'WPINC' ) )  die;
 
@@ -46,7 +46,7 @@ class Plugin implements PluginInterface {
 		 *
 		 * @param Plugin $this
 		 */
-		do_action( 'wp_sermon_manager_init', $this );
+		do_action( 'wpsm_init', $this );
 	}
 
 	/**
@@ -182,7 +182,7 @@ class Plugin implements PluginInterface {
 
 		$tmpl_dir = trailingslashit( ( true === $__admin_tmpl ? 'includes/Admin/Templates' : 'templates' ) );
 
-		$__template_file = apply_filters( 'wpsm-template', WP_SERMON_MANAGER_PATH . $tmpl_dir . '$__template_file.php', $__template_file, $__template_data );
+		$__template_file = apply_filters( 'wpsm-template', WPSM_PLUGIN_PATH . $tmpl_dir . '$__template_file.php', $__template_file, $__template_data );
 
 		if ( $__template_file && file_exists( $__template_file ) ) {
 			extract( $__template_data, EXTR_SKIP );
@@ -195,8 +195,8 @@ class Plugin implements PluginInterface {
 	 */
 	public function setupL10n() {
 
-		$locale = apply_filters( 'plugin_locale', get_locale(), 'wp-sermon-manager' );
-		load_textdomain( 'wp-sermon-manager', WP_LANG_DIR . '/wp-sermon-manager/wp-sermon-manager-' . $locale . '.mo' );
-		load_plugin_textdomain( 'wp-sermon-manager', false, plugin_basename( WP_SERMON_MANAGER_PATH ) . '/languages/' );
+		$locale = apply_filters( 'plugin_locale', get_locale(), 'wpsm' );
+		load_textdomain( 'wpsm', WP_LANG_DIR . '/wp-sermon-manager/wpsm-' . $locale . '.mo' );
+		load_plugin_textdomain( 'wpsm', false, plugin_basename( WPSM_PLUGIN_PATH ) . '/languages/' );
 	}
 }

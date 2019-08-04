@@ -1,12 +1,12 @@
 <?php
 /**
  * Plugin Name: WP Sermon Manager
- * Plugin URI:  https://github.com/allenmoore/wp-sermon-manager
+ * Plugin URI:  https://github.com/allenmoore/wpsm
  * Description: WP Sermon Manager makes it easy for churches to easily publish sermons online.
  * Version:     1.0.0
  * Author:      Allen Moore
  * Author URI:  https://allenmoore.co
- * Text Domain: wp-sermon-manager
+ * Text Domain: wpsm
  * Domain Path: /languages
  * License:     MIT
  */
@@ -33,25 +33,24 @@
  * SOFTWARE.
  */
 
-namespace WPSermonManager;
+namespace WPSM;
 
-use WPSermonManager\Plugin;
-
-use WPSermonManager\Modules\SermonsApp;
-use WPSermonManager\Modules\Menu;
-use WPSermonManager\Modules\PostTypes\Sermon as SermonPostType;
-use WPSermonManager\Modules\Taxonomies\Books as BooksTaxonomy;
-use WPSermonManager\Modules\Taxonomies\Series as SeriesTaxonomy;
-use WPSermonManager\Modules\Taxonomies\Speakers as SpeakersTaxonomy;
-use WPSermonManager\Modules\Taxonomies\Topics as TopicsTaxonomy;
+use WPSM\Plugin;
+use WPSM\Modules\SermonsApp;
+use WPSM\Modules\Menu;
+use WPSM\Modules\PostTypes\Sermon as SermonPostType;
+use WPSM\Modules\Taxonomies\Books as BooksTaxonomy;
+use WPSM\Modules\Taxonomies\Series as SeriesTaxonomy;
+use WPSM\Modules\Taxonomies\Speakers as SpeakersTaxonomy;
+use WPSM\Modules\Taxonomies\Topics as TopicsTaxonomy;
 
 if ( ! defined( 'WPINC' ) )  die;
 
 // Useful global constants.
-define( 'WP_SERMON_MANAGER_VERSION', '1.0.0' );
-define( 'WP_SERMON_MANAGER_URL',     plugin_dir_url( __FILE__ ) );
-define( 'WP_SERMON_MANAGER_PATH',    dirname( __FILE__ ) . '/' );
-define( 'WP_SERMON_MANAGER_INC',     WP_SERMON_MANAGER_PATH . 'includes/' );
+define( 'WPSM_VERSION', '1.0.0' );
+define( 'WPSM_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+define( 'WPSM_PLUGIN_PATH', dirname( __FILE__ ) . '/' );
+define( 'WPSM_PLUGIN_INC', WPSM_PLUGIN_PATH . 'includes/' );
 
 if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
 	require_once __DIR__ . '/vendor/autoload.php';
@@ -66,17 +65,17 @@ function initialize() {
 
 	add_action( 'init', [ $plugin, 'setup' ] );
 
-	$menu             = new Menu();
-	$sermon           = new SermonPostType( $menu );
-	$sermonsApp       = new SermonsApp();
+	$menu = new Menu();
+	$sermon = new SermonPostType( $menu );
+	$sermonsApp = new SermonsApp();
 	$sermonsApp->setPlugin( $plugin );
 	$plugin
 		->registerModule( $menu )
 		->registerModule( $sermon )
-		->registerModule( new BooksTaxonomy( $menu ) )
-		->registerModule( new SeriesTaxonomy( $menu ) )
 		->registerModule( new SpeakersTaxonomy( $menu ) )
+		->registerModule( new SeriesTaxonomy( $menu ) )
 		->registerModule( new TopicsTaxonomy( $menu ) )
+		->registerModule( new BooksTaxonomy( $menu ) )
 		->registerModule( $sermonsApp );
 
 	/**
@@ -84,9 +83,9 @@ function initialize() {
 	 *
 	 * @param Plugin $plugin
 	 */
-	do_action( 'wp_sermon_manager_loaded', $plugin );
+	do_action( 'wpsm_loaded', $plugin );
 }
-add_action( 'after_setup_theme', 'WPSermonManager\initialize', 20 );
+add_action( 'after_setup_theme', 'WPSM\initialize', 20 );
 
 /**
  * Function to run at plugin activation.
@@ -94,4 +93,4 @@ add_action( 'after_setup_theme', 'WPSermonManager\initialize', 20 );
 function activate() {
 	flush_rewrite_rules();
 }
-register_activation_hook( __FILE__, 'WPSermonManager\activate' );
+register_activation_hook( __FILE__, 'WPSM\activate' );

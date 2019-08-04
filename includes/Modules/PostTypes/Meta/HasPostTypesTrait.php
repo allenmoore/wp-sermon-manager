@@ -2,11 +2,11 @@
 /**
  * Post Type Trait Validation
  *
- * @package WPSermonManager\Modules\PostType\Meta
+ * @package WPSM\Modules\PostType\Meta
  */
-namespace WPSermonManager\Modules\PostTypes\Meta;
+namespace WPSM\Modules\PostTypes\Meta;
 
-use WPSermonManager\Modules\PostTypes\PostTypeInterface;
+use WPSM\Modules\PostTypes\PostTypeInterface;
 
 /**
  * HasPostTypesTrait

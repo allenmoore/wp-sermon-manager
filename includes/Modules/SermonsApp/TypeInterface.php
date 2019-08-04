@@ -1,6 +1,6 @@
 <?php
 
-namespace WPSermonManager\Modules\ActivitiesApp;
+namespace WPSM\Modules\ActivitiesApp;
 
 interface TypeInterface {
 

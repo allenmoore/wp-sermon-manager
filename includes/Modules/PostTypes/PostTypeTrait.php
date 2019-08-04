@@ -1,7 +1,7 @@
 <?php
-namespace WPSermonManager\Modules\PostTypes;
+namespace WPSM\Modules\PostTypes;
 
-use WPSermonManager\Modules\PostTypes\Meta\MetaInterface;
+use WPSM\Modules\PostTypes\Meta\MetaInterface;
 
 trait PostTypeTrait {
 

@@ -2,9 +2,9 @@
 /**
  * Roles
  *
- * @package WPSermonManager\Admin\Users
+ * @package WPSM\Admin\Users
  */
-namespace WPSermonManager\Admin\Users;
+namespace WPSM\Admin\Users;
 
 use WP_Role;
 

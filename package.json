@@ -3,10 +3,10 @@
   "title": "WP Sermon Manager",
   "description": "WP Sermon Manager makes it easy for churches to easily publish sermons online.",
   "version": "1.0.0",
-  "homepage": "https://github.com/allenmoore/wp-sermon-manager",
+  "homepage": "https://github.com/allenmoore/wpsm",
   "repository": {
     "type": "git",
-    "url": "https://github.com/allenmoore/wp-sermon-manager"
+    "url": "https://github.com/allenmoore/wpsm"
   },
   "author": {
     "name": "Allen Moore",
@@ -29,6 +29,7 @@
     "eslint-plugin-node": "^9.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.0",
+    "faucet": "^0.0.1",
     "gulp": "^4.0.2",
     "gulp-babel": "^8.0.0",
     "gulp-cssnano": "^2.1.3",
@@ -53,6 +54,7 @@
     "stylelint": "^10.1.0",
     "stylelint-config-allenmoore": "^1.2.0",
     "stylelint-no-unsupported-browser-features": "^3.0.2",
+    "tape": "^4.11.0",
     "vinyl-buffer": "^1.0.1",
     "vinyl-source-stream": "^2.0.0"
   }

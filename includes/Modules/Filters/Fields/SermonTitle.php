@@ -2,9 +2,9 @@
 /**
  * Sermon Title.
  *
- * @package WPSermonManager\Modules\Filters\Fields
+ * @package WPSM\Modules\Filters\Fields
  */
-namespace WPSermonManager\Modules\Filters\Fields;
+namespace WPSM\Modules\Filters\Fields;
 
 if ( ! defined( 'WPINC' ) )  die;
 

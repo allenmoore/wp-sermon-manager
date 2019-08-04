@@ -4,7 +4,7 @@
  *
  * @package WPSermonManage\Util\Meta
  */
-namespace WPSermonManager\Util\Meta;
+namespace WPSM\Util\Meta;
 
 /**
  * Trait RestFieldTrait

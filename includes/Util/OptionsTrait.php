@@ -2,9 +2,9 @@
 /**
  * Options Trait
  *
- * @package WPSermonManager\Util
+ * @package WPSM\Util
  */
-namespace WPSermonManager\Util;
+namespace WPSM\Util;
 
 /**
  * Trait OptionsTrait

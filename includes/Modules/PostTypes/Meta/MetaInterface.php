@@ -2,12 +2,12 @@
 /**
  * Meta Interface
  *
- * @package WPSermonManager\Modules\PostTypes\Meta
+ * @package WPSM\Modules\PostTypes\Meta
  */
-namespace WPSermonManager\Modules\PostTypes\Meta;
+namespace WPSM\Modules\PostTypes\Meta;
 
-use WPSermonManager\Modules\PostTypes\PostTypeInterface;
-use WPSermonManager\MetaInterface as BaseMetaInterface;
+use WPSM\Modules\PostTypes\PostTypeInterface;
+use WPSM\MetaInterface as BaseMetaInterface;
 
 /**
  * Interface MetaInterface
