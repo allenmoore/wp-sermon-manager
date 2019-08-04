@@ -5,7 +5,7 @@ $current_view = empty( $current_view ) ? 'general' : $current_view;
 ?>
 <div class="wrap <?php echo esc_attr( 'wpsm-settings -' . $current_view ); ?>">
 	<header class="settings-header" role="banner">
-		<h1 class="wp-heading-inline"><?php esc_html_e( 'WP Sermon Manager Settings', 'wp-sermon-manager' ); ?></h1>
+		<h1 class="wp-heading-inline"><?php esc_html_e( 'WP Sermon Manager Settings', 'wpsm' ); ?></h1>
 	</header>
 	<main class="settings-main">
 		<form method="<?php echo esc_attr( apply_filters( 'wpsm_settings_form_method_view_' . $current_view, 'post' ) ); ?>" id="js-wpsm-settings-form" class="settings-form" action="" enctype="multipart/form-data">
@@ -20,8 +20,8 @@ $current_view = empty( $current_view ) ? 'general' : $current_view;
 				</ul>
 			</nav>
 			<section class="settings-content" aria-labelledby="general-settings-headline" aria-describedby="">
-				<h2 id="general-settings-headline" class="section-heading"><?php esc_html( 'General Settings', 'wp-sermon-managers' );?></h2>
-				<div class="section-description"><?php echo esc_html( 'General WP Sermon Manager settings including, slug customization, taxonomy name customization, and more', 'wp-sermon-manager' );?></div>
+				<h2 id="general-settings-headline" class="section-heading"><?php esc_html( 'General Settings', 'wpsms' );?></h2>
+				<div class="section-description"><?php echo esc_html( 'General WP Sermon Manager settings including, slug customization, taxonomy name customization, and more', 'wpsm' );?></div>
 				<div class="section-settings-body">
 					<div class="section-row">
 						<div class="section-column -left">

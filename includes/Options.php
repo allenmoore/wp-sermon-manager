@@ -2,12 +2,12 @@
 /**
  * Options
  *
- * @package WPSermonManager
+ * @package WPSM
  */
-namespace WPSermonManager;
+namespace WPSM;
 
-use WPSermonManager\Util\OptionsInterface;
-use WPSermonManager\Util\OptionsTrait;
+use WPSM\Util\OptionsInterface;
+use WPSM\Util\OptionsTrait;
 
 /**
  * The Options Class
@@ -21,7 +21,7 @@ class Options implements OptionsInterface {
 	use OptionsTrait;
 
 	/** @var string */
-	const SLUG = 'wp-sermon-manager-options';
+	const SLUG = 'wpsm-options';
 
 	/**
 	 * The Options Constructor

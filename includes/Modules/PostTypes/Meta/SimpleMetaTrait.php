@@ -2,11 +2,11 @@
 /**
  * Simple Meta Trait
  *
- * @package WPSermonManager\Modules\PostTypes\Meta
+ * @package WPSM\Modules\PostTypes\Meta
  */
-namespace WPSermonManager\Modules\PostTypes\Meta;
+namespace WPSM\Modules\PostTypes\Meta;
 
-use WPSermonManager\PluginInterface;
+use WPSM\PluginInterface;
 
 /**
  * Trait SimpleMetaTrait

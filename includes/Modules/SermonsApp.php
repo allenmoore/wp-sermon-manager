@@ -2,14 +2,16 @@
 /**
  * Sermon App
  *
- * @package WPSermonManager\Modules
+ * @package WPSM\Modules
  */
-namespace WPSermonManager\Modules;
+namespace WPSM\Modules;
 
-use WPSermonManager\Modules\ActivitiesApp\TypeInterface;
-use WPSermonManager\Modules\Taxonomies\Meta\SpeakerImage as SpeakerImageMeta;
-use WPSermonManager\PluginInterface;
-use WPSermonManager\Util\HasPluginTrait;
+use WPSM\Modules\ActivitiesApp\TypeInterface;
+use WPSM\Modules\Taxonomies\Meta\SeriesImage as SeriesImageMeta;
+use WPSM\Modules\Taxonomies\Meta\SpeakerImage as SpeakerImageMeta;
+use WPSM\Modules\Taxonomies\Meta\TopicImage as TopicImageMeta;
+use WPSM\PluginInterface;
+use WPSM\Util\HasPluginTrait;
 
 /**
  * The SermonsApp Class.
@@ -28,7 +30,26 @@ class SermonsApp implements ModuleInterface {
 	/** @var TypeInterface[] */
 	private $types = [ ];
 
+	/**
+	 * Property representing the SpeakersImage class.
+	 *
+	 * @var \WPSM\Modules\Taxonomies\Meta\SpeakersImage
+	 */
 	public $speakerImageMeta;
+
+	/**
+	 * Property representing the SeriesImage class.
+	 *
+	 * @var \WPSM\Modules\Taxonomies\Meta\SeriesImage
+	 */
+	public $seriesImageMeta;
+
+	/**
+	 * Property representing the TopicImage class.
+	 *
+	 * @var \WPSM\Modules\Taxonomies\Meta\TopicImage
+	 */
+	public $topicImageMeta;
 
 	/**
 	 * Method to get this module's slug
@@ -49,10 +70,12 @@ class SermonsApp implements ModuleInterface {
 	 * @param PluginInterface $plugin
 	 */
 	public function setupModule( PluginInterface $plugin ) {
-		add_action( 'wp_sermon_manager_init', [ $this, 'registerDefaultTypes' ] );
+		add_action( 'wpsm_init', [ $this, 'registerDefaultTypes' ] );
 		add_action( 'wp_loaded', [ $this, 'registerAssets' ] );
 
+		$this->seriesImageMeta = new SeriesImageMeta();
 		$this->speakerImageMeta = new SpeakerImageMeta();
+		$this->topicImageMeta = new TopicImageMeta();
 	}
 
 	/**
@@ -61,7 +84,7 @@ class SermonsApp implements ModuleInterface {
 	 * Also does an action to let other code hook in and register types
 	 */
 	public function registerDefaultTypes() {
-		do_action( 'wp_sermon_manager_app_init', $this );
+		do_action( 'wpsm_app_init', $this );
 	}
 
 	/**
@@ -70,7 +93,7 @@ class SermonsApp implements ModuleInterface {
 	public function registerAssets() {
 
 		$min = defined( 'SCRIPT_DEBUG' ) && filter_var( SCRIPT_DEBUG, FILTER_VALIDATE_BOOLEAN ) ? '' : '.min';
-		$pluginUrl = trailingslashit( WP_SERMON_MANAGER_URL );
+		$pluginUrl = trailingslashit( WPSM_PLUGIN_URL );
 
 		wp_register_style(
 			'wpsm-admin-css',

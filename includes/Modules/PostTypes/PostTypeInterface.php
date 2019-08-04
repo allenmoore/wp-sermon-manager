@@ -2,11 +2,11 @@
 /**
  * Post Type Interface
  *
- * @package WPSermonManager\Modules\PostTypes
+ * @package WPSM\Modules\PostTypes
  */
-namespace WPSermonManager\Modules\PostTypes;
+namespace WPSM\Modules\PostTypes;
 
-use WPSermonManager\Modules\PostTypes\Meta\MetaInterface;
+use WPSM\Modules\PostTypes\Meta\MetaInterface;
 
 interface PostTypeInterface {
 

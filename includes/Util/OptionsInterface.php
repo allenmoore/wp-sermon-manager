@@ -2,16 +2,16 @@
 /**
  * Options Interface
  *
- * @package WPSermonManager\Util
+ * @package WPSM\Util
  */
-namespace WPSermonManager\Util;
+namespace WPSM\Util;
 
 /**
  * Interface OptionsInterface
  *
  * Handles method declaration when registering an option object.
  *
- * @package WPSermonManager\Util
+ * @package WPSM\Util
  */
 interface OptionsInterface {
 

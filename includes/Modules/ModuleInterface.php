@@ -2,18 +2,18 @@
 /**
  * Module Interface
  *
- * @package WPSermonManager\Modules
+ * @package WPSM\Modules
  */
-namespace WPSermonManager\Modules;
+namespace WPSM\Modules;
 
-use WPSermonManager\PluginInterface;
+use WPSM\PluginInterface;
 
 /**
  * Interface ModuleInterface
  *
  * Handles method declaration when registering a module.
  *
- * @package WPSermonManager\Modules
+ * @package WPSM\Modules
  */
 interface ModuleInterface {
 

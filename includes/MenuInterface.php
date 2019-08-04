@@ -2,9 +2,9 @@
 /**
  * Menu Interface
  *
- * @package WPSermonManager
+ * @package WPSM
  */
-namespace WPSermonManager;
+namespace WPSM;
 
 /**
  * Interface MenuInterface

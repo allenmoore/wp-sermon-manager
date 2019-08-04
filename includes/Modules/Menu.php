@@ -2,14 +2,14 @@
 /**
  * Menu
  *
- * @package WPSermonManager\Modules
+ * @package WPSM\Modules
  */
-namespace WPSermonManager\Modules;
+namespace WPSM\Modules;
 
-use WPSermonManager\MenuInterface;
-use WPSermonManager\PluginInterface;
-use WPSermonManager\Util\HasPluginInterface;
-use WPSermonManager\Util\HasPluginTrait;
+use WPSM\MenuInterface;
+use WPSM\PluginInterface;
+use WPSM\Util\HasPluginInterface;
+use WPSM\Util\HasPluginTrait;
 
 /**
  * The Menu Class.
@@ -21,7 +21,7 @@ use WPSermonManager\Util\HasPluginTrait;
 class Menu implements ModuleInterface, MenuInterface, HasPluginInterface {
 
 	/** @var string */
-	const SLUG = 'wp-sermon-manager';
+	const SLUG = 'wpsm';
 
 	use HasPluginTrait;
 
@@ -40,7 +40,7 @@ class Menu implements ModuleInterface, MenuInterface, HasPluginInterface {
 	 * Method to initialize the module
 	 *
 	 * Whatever a module needs to do prior to init should be done here. This would include hooking into the
-	 * wp_sermon_manager_init action (runs on init, but is specific to this plugin.
+	 * wpsm_init action (runs on init, but is specific to this plugin.
 	 *
 	 * @param PluginInterface $plugin
 	 */
@@ -94,8 +94,8 @@ class Menu implements ModuleInterface, MenuInterface, HasPluginInterface {
 	public function adminMenu() {
 
 		add_menu_page(
-			esc_html__( 'Sermon Test', 'wp-sermon-manager' ),
-			esc_html__( 'Sermon Test', 'wp-sermon-manager' ),
+			esc_html__( 'Sermon Test', 'wpsm' ),
+			esc_html__( 'Sermon Test', 'wpsm' ),
 			$this->getEditCapability(),
 			$this->getMenuSlug(),
 			'',

@@ -2,13 +2,13 @@
 /**
  * Plugin Interface
  *
- * @package WPSermonManager
+ * @package WPSM
  */
-namespace WPSermonManager;
+namespace WPSM;
 
-use WPSermonManager\Modules\ModuleInterface;
-use WPSermonManager\Modules\PostTypes\PostTypeInterface;
-use WPSermonManager\Modules\Taxonomies\TaxonomyInterface;
+use WPSM\Modules\ModuleInterface;
+use WPSM\Modules\PostTypes\PostTypeInterface;
+use WPSM\Modules\Taxonomies\TaxonomyInterface;
 
 /**
  * Interface PluginInterface

@@ -2,7 +2,7 @@
 /**
  * Meta Interface
  *
- * @package WPSermonManager
+ * @package WPSM
  */
 namespace WPSermonManage;
 

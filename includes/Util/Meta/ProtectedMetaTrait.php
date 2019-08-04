@@ -2,9 +2,9 @@
 /**
  * Meta Trait
  *
- * @package WPSermonManager\Util\Meta
+ * @package WPSM\Util\Meta
  */
-namespace WPSermonManager\Util\Meta;
+namespace WPSM\Util\Meta;
 
 /**
  * Trait ProtectedMetaTrait

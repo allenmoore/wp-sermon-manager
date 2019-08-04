@@ -2,15 +2,15 @@
 /**
  * Topics
  *
- * @package WPSermonManager\Modules\Taxonomies
+ * @package WPSM\Modules\Taxonomies
  */
-namespace WPSermonManager\Modules\Taxonomies;
+namespace WPSM\Modules\Taxonomies;
 
-use WPSermonManager\MenuInterface;
-use WPSermonManager\MetaInterface;
-use WPSermonManager\Modules\ModuleInterface;
-use WPSermonManager\PluginInterface;
-use WPSermonManager\Util\HasPluginTrait;
+use WPSM\MenuInterface;
+use WPSM\MetaInterface;
+use WPSM\Modules\ModuleInterface;
+use WPSM\PluginInterface;
+use WPSM\Util\HasPluginTrait;
 
 if ( ! defined( 'WPINC' ) ) {
 	die;
@@ -59,7 +59,7 @@ class Topics implements TaxonomyInterface, ModuleInterface {
 	 */
 	public function setupModule( PluginInterface $plugin ) {
 		$this->setPlugin( $plugin );
-		add_action( 'wp_sermon_manager_init', [$this, 'registerTaxonomy'], 15 );
+		add_action( 'wpsm_init', [$this, 'registerTaxonomy'], 15 );
 	}
 
 	/**
@@ -79,23 +79,23 @@ class Topics implements TaxonomyInterface, ModuleInterface {
 		register_taxonomy( $this->getTaxonomySlug(),
 			$this->getPlugin()->getPostType( 'wpsm-sermon' )->getPostTypeSlug(), [
 			'labels'            => [
-				'name'                       => esc_html_x( 'Topics', 'taxonomy general name', 'wp-sermon-manager' ),
-				'singular_name'              => esc_html_x( 'Topic', 'taxonomy singular name', 'wp-sermon-manager' ),
-				'search_items'               => esc_html__( 'Search Topics', 'wp-sermon-manager' ),
-				'popular_items'              => esc_html__( 'Popular Topics', 'wp-sermon-manager' ),
-				'all_items'                  => esc_html__( 'All Topics', 'wp-sermon-manager' ),
-				'edit_item'                  => esc_html__( 'Edit Speakes', 'wp-sermon-manager' ),
-				'view_item'                  => esc_html__( 'View Topic', 'wp-sermon-manager' ),
-				'update_item'                => esc_html__( 'Update Topic', 'wp-sermon-manager' ),
-				'add_new_item'               => esc_html__( 'Add New Topic', 'wp-sermon-manager' ),
-				'new_item_name'              => esc_html__( 'New Topic Name', 'wp-sermon-manager' ),
-				'separate_items_with_commas' => esc_html__( 'Separate topics with commas', 'wp-sermon-manager' ),
-				'add_or_remove_items'        => esc_html__( 'Add or remove topics', 'wp-sermon-manager' ),
-				'choose_from_most_used'      => esc_html__( 'Choose from the most used topics', 'wp-sermon-manager' ),
-				'not_found'                  => esc_html__( 'No topics found.', 'wp-sermon-manager' ),
-				'no_terms'                   => esc_html__( 'No topics', 'wp-sermon-manager' ),
-				'items_list_navigation'      => esc_html__( 'Topics list navigation', 'wp-sermon-manager' ),
-				'items_list'                 => esc_html__( 'Topics list', 'wp-sermon-manager' ),
+				'name'                       => esc_html_x( 'Topics', 'taxonomy general name', 'wpsm' ),
+				'singular_name'              => esc_html_x( 'Topic', 'taxonomy singular name', 'wpsm' ),
+				'search_items'               => esc_html__( 'Search Topics', 'wpsm' ),
+				'popular_items'              => esc_html__( 'Popular Topics', 'wpsm' ),
+				'all_items'                  => esc_html__( 'All Topics', 'wpsm' ),
+				'edit_item'                  => esc_html__( 'Edit Speakes', 'wpsm' ),
+				'view_item'                  => esc_html__( 'View Topic', 'wpsm' ),
+				'update_item'                => esc_html__( 'Update Topic', 'wpsm' ),
+				'add_new_item'               => esc_html__( 'Add New Topic', 'wpsm' ),
+				'new_item_name'              => esc_html__( 'New Topic Name', 'wpsm' ),
+				'separate_items_with_commas' => esc_html__( 'Separate topics with commas', 'wpsm' ),
+				'add_or_remove_items'        => esc_html__( 'Add or remove topics', 'wpsm' ),
+				'choose_from_most_used'      => esc_html__( 'Choose from the most used topics', 'wpsm' ),
+				'not_found'                  => esc_html__( 'No topics found.', 'wpsm' ),
+				'no_terms'                   => esc_html__( 'No topics', 'wpsm' ),
+				'items_list_navigation'      => esc_html__( 'Topics list navigation', 'wpsm' ),
+				'items_list'                 => esc_html__( 'Topics list', 'wpsm' ),
 			],
 			'public'            => true,
 			'hierarchical'      => false,

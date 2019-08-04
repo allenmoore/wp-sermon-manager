@@ -2,10 +2,10 @@
 /**
  * Template Tags
  *
- * @package WPSermonManager
+ * @package WPSM
  */
 
-namespace WPSermonManager;
+namespace WPSM;
 
 /**
  * Template tag to render a template
@@ -15,7 +15,7 @@ namespace WPSermonManager;
  */
 function template( $__template_file, array $__template_data = [] ) {
 
-	$__template_file = apply_filters( 'wpsm-template', WP_SERMON_MANAGER_INC . "templates/$__template_file.php", $__template_file, $__template_data );
+	$__template_file = apply_filters( 'wpsm-template', WPSM_PLUGIN_INC . "templates/$__template_file.php", $__template_file, $__template_data );
 
 	if ( $__template_file && file_exists( $__template_file ) ) {
 		extract( $__template_data, EXTR_SKIP );

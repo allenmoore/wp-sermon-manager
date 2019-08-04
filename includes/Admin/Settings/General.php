@@ -2,9 +2,9 @@
 /**
  * Settings
  *
- * @package WPSermonManager\Admin
+ * @package WPSM\Admin
  */
-namespace WPSermonManager\Admin\Settings;
+namespace WPSM\Admin\Settings;
 
 /**
  * The General Class.
@@ -29,8 +29,8 @@ class General {
 
 		add_submenu_page(
 			'edit.php?post_type=wpsm_sermon',
-			__( 'Sermon Manager Settings', 'wp-sermon-manager' ),
-			__( 'Settings', 'wp-sermon-manager' ),
+			__( 'Sermon Manager Settings', 'wpsm' ),
+			__( 'Settings', 'wpsm' ),
 			'manage_wpsm_settings',
 			'wpsm-settings',
 			array( $this, 'settings_page' )
@@ -54,7 +54,7 @@ class General {
 	 */
 	public function setting_section_callback() {
 		?>
-		<p><?php esc_html_e( 'Settings for the WP Sermon Manager.', 'wp-sermon-manager' ); ?></p>
+		<p><?php esc_html_e( 'Settings for the WP Sermon Manager.', 'wpsm' ); ?></p>
 		<?php
 	}
 
@@ -69,7 +69,7 @@ class General {
 		?>
 
 		<input name="wpsm_path" id="wpsm_path" type="text" value="<?php echo esc_attr( $svg_path_option ); ?>" class="regular-text" />
-		<p class="description"><?php esc_html_e( 'The path to the active theme\'s SVG files. The default location is: ', 'wp-sermon-manager' ); ?><code><?php esc_html_e( 'assets/svg/dist/', 'wp-sermon-manager' ); ?></code></p>
+		<p class="description"><?php esc_html_e( 'The path to the active theme\'s SVG files. The default location is: ', 'wpsm' ); ?><code><?php esc_html_e( 'assets/svg/dist/', 'wpsm' ); ?></code></p>
 
 		<?php
 	}

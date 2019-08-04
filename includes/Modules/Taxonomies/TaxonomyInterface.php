@@ -2,11 +2,11 @@
 /**
  * Taxonomy Interface
  *
- * @package WPSermonManager\Modules\Taxonomies
+ * @package WPSM\Modules\Taxonomies
  */
-namespace WPSermonManager\Modules\Taxonomies;
+namespace WPSM\Modules\Taxonomies;
 
-use WPSermonManager\MetaInterface;
+use WPSM\MetaInterface;
 
 /**
  * Interface TaxonomyInterface

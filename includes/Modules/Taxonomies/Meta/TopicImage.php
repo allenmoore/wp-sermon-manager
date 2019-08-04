@@ -1,6 +1,6 @@
 <?php
 /**
- * Speaker Image
+ * Topic Image
  *
  * @package WPSM\Modules\Taxonomies\Meta
  */
@@ -9,19 +9,19 @@ namespace WPSM\Modules\Taxonomies\Meta;
 use function WPSM\template;
 
 /**
- * The SpeakerImage Class.
+ * The TopicImage Class.
  *
  * @since 1.0.0
  */
-class SpeakerImage {
+class TopicImage {
 
 	/** @var string */
-	const TAX_NAME = 'wpsm-sermon-speaker';
+	const TAX_NAME = 'wpsm-sermon-topic';
 
-	const TERM_NAME = 'wpsm-speaker-image-id';
+	const TERM_NAME = 'wpsm-topic-image-id';
 
 	/**
-	 * The SpeakerImage Constructor
+	 * The TopicImage Constructor
 	 */
 	public function __construct() {
 		add_action( static::TAX_NAME . '_add_form_fields', array ( $this, 'uploadImage' ), 10 );
