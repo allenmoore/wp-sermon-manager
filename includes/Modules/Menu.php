@@ -11,6 +11,8 @@ use WPSM\PluginInterface;
 use WPSM\Util\HasPluginInterface;
 use WPSM\Util\HasPluginTrait;
 
+if ( ! defined( 'ABSPATH' ) ) exit;
+
 /**
  * The Menu Class.
  *

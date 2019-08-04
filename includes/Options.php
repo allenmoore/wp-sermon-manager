@@ -9,6 +9,8 @@ namespace WPSM;
 use WPSM\Util\OptionsInterface;
 use WPSM\Util\OptionsTrait;
 
+if ( ! defined( 'ABSPATH' ) ) exit;
+
 /**
  * The Options Class
  *

@@ -8,6 +8,8 @@ namespace WPSM\Modules\Taxonomies\Meta;
 
 use function WPSM\template;
 
+if ( ! defined( 'ABSPATH' ) ) exit;
+
 /**
  * The SpeakerImage Class.
  *

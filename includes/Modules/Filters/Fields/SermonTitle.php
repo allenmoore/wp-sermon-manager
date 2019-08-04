@@ -6,7 +6,7 @@
  */
 namespace WPSM\Modules\Filters\Fields;
 
-if ( ! defined( 'WPINC' ) )  die;
+if ( ! defined( 'ABSPATH' ) ) exit;
 
 /**
  * The SermonTitle Class.

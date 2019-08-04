@@ -13,6 +13,8 @@ use WPSM\Modules\Taxonomies\Meta\TopicImage as TopicImageMeta;
 use WPSM\PluginInterface;
 use WPSM\Util\HasPluginTrait;
 
+if ( ! defined( 'ABSPATH' ) ) exit;
+
 /**
  * The SermonsApp Class.
  *

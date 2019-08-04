@@ -9,6 +9,8 @@ namespace WPSM\Modules\PostTypes\Meta;
 use WPSM\Modules\PostTypes\PostTypeInterface;
 use WPSM\MetaInterface as BaseMetaInterface;
 
+if ( ! defined( 'ABSPATH' ) ) exit;
+
 /**
  * Interface MetaInterface
  *

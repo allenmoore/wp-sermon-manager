@@ -8,6 +8,8 @@ namespace WPSM\Modules\PostTypes\Meta;
 
 use WPSM\Modules\PostTypes\PostTypeInterface;
 
+if ( ! defined( 'ABSPATH' ) ) exit;
+
 /**
  * HasPostTypesTrait
  *

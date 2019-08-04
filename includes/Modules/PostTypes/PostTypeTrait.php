@@ -3,6 +3,8 @@ namespace WPSM\Modules\PostTypes;
 
 use WPSM\Modules\PostTypes\Meta\MetaInterface;
 
+if ( ! defined( 'ABSPATH' ) ) exit;
+
 trait PostTypeTrait {
 
 	public function getPostTypeSlug() {

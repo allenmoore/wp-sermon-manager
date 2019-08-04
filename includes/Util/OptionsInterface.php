@@ -6,6 +6,8 @@
  */
 namespace WPSM\Util;
 
+if ( ! defined( 'ABSPATH' ) ) exit;
+
 /**
  * Interface OptionsInterface
  *
