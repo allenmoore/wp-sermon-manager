@@ -6,6 +6,8 @@
  */
 namespace WPSM\Admin;
 
+if ( ! defined( 'ABSPATH' ) ) exit;
+
 /**
  * The TaxonomyMetaAbstract Abstract Class.
  *

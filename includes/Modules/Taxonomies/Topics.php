@@ -12,9 +12,7 @@ use WPSM\Modules\ModuleInterface;
 use WPSM\PluginInterface;
 use WPSM\Util\HasPluginTrait;
 
-if ( ! defined( 'WPINC' ) ) {
-	die;
-}
+if ( ! defined( 'ABSPATH' ) ) exit;
 
 /**
  * The Topics Class

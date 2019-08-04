@@ -6,6 +6,8 @@
  */
 namespace WPSM;
 
+if ( ! defined( 'ABSPATH' ) ) exit;
+
 /**
  * Interface MenuInterface
  *

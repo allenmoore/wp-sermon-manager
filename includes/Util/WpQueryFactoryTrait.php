@@ -8,6 +8,8 @@ namespace WPSM\Util;
 
 use WP_Query;
 
+if ( ! defined( 'ABSPATH' ) ) exit;
+
 /**
  * Trait WpQueryFactoryTrait
  *

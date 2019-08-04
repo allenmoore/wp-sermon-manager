@@ -44,7 +44,7 @@ use WPSM\Modules\Taxonomies\Series as SeriesTaxonomy;
 use WPSM\Modules\Taxonomies\Speakers as SpeakersTaxonomy;
 use WPSM\Modules\Taxonomies\Topics as TopicsTaxonomy;
 
-if ( ! defined( 'WPINC' ) )  die;
+if ( ! defined( 'ABSPATH' ) ) exit;
 
 // Useful global constants.
 define( 'WPSM_VERSION', '1.0.0' );

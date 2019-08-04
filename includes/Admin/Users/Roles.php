@@ -8,7 +8,7 @@ namespace WPSM\Admin\Users;
 
 use WP_Role;
 
-if ( ! defined( 'WPINC' ) )  die;
+if ( ! defined( 'ABSPATH' ) ) exit;
 
 /**
  * The Roles Class.

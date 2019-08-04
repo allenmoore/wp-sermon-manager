@@ -6,6 +6,8 @@
  */
 namespace WPSM\Util\Meta;
 
+if ( ! defined( 'ABSPATH' ) ) exit;
+
 /**
  * The AbstractRestField Class
  *

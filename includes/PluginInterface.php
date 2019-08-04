@@ -10,6 +10,8 @@ use WPSM\Modules\ModuleInterface;
 use WPSM\Modules\PostTypes\PostTypeInterface;
 use WPSM\Modules\Taxonomies\TaxonomyInterface;
 
+if ( ! defined( 'ABSPATH' ) ) exit;
+
 /**
  * Interface PluginInterface
  *

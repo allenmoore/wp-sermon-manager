@@ -8,6 +8,8 @@ namespace WPSM\Modules\PostTypes\Meta;
 
 use WPSM\PluginInterface;
 
+if ( ! defined( 'ABSPATH' ) ) exit;
+
 /**
  * Trait SimpleMetaTrait
  *

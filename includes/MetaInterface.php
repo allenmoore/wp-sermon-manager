@@ -4,7 +4,9 @@
  *
  * @package WPSM
  */
-namespace WPSermonManage;
+namespace WPSM;
+
+if ( ! defined( 'ABSPATH' ) ) exit;
 
 /**
  * Interface MetaInterface

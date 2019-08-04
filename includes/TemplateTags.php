@@ -4,8 +4,9 @@
  *
  * @package WPSM
  */
-
 namespace WPSM;
+
+if ( ! defined( 'ABSPATH' ) ) exit;
 
 /**
  * Template tag to render a template

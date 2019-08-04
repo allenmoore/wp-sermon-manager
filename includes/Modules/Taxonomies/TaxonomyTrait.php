@@ -8,6 +8,8 @@ namespace WPSM\Modules\Taxonomies;
 
 use WPSM\MetaInterface;
 
+if ( ! defined( 'ABSPATH' ) ) exit;
+
 /**
  * Trait TaxonomyTrait
  *

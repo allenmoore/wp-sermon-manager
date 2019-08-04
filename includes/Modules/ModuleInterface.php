@@ -8,6 +8,8 @@ namespace WPSM\Modules;
 
 use WPSM\PluginInterface;
 
+if ( ! defined( 'ABSPATH' ) ) exit;
+
 /**
  * Interface ModuleInterface
  *

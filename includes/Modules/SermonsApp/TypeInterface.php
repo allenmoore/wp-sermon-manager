@@ -1,6 +1,8 @@
 <?php
 
-namespace WPSM\Modules\ActivitiesApp;
+namespace WPSM\Modules\SermonsApp;
+
+if ( ! defined( 'ABSPATH' ) ) exit;
 
 interface TypeInterface {
 

@@ -11,7 +11,7 @@ use WPSM\PluginInterface;
 use WPSM\Util\HasPluginInterface;
 use WPSM\Util\HasPluginTrait;
 
-if ( ! defined( 'WPINC' ) )  die;
+if ( ! defined( 'ABSPATH' ) ) exit;
 
 /**
  * The Sermon Class.

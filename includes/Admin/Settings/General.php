@@ -6,6 +6,8 @@
  */
 namespace WPSM\Admin\Settings;
 
+if ( ! defined( 'ABSPATH' ) ) exit;
+
 /**
  * The General Class.
  *
